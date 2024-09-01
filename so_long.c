@@ -6,18 +6,21 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/01 15:10:08 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:28:20 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
+void	put_pixel_img(t_image img, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (x >= 0 && y >= 0 && x < img.width && y < img.height)
+	{
+		dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
+		*(unsigned int*)dst = color;
+	}
 }
 
 int on_destroy(t_data *game)
@@ -34,6 +37,12 @@ int on_keypress(int keysym, t_data *game)
 	(void)game;
 	printf("Pressed key: %d\\n", keysym);
 	return (0);
+}
+int     exit_game(t_data *window)
+{
+	if (window)
+		mlx_destroy_window (window->mlx, window->win);
+	exit(EXIT_SUCCESS);
 }
 
 t_data	new_game(int width, int height, char *str)
@@ -77,7 +86,7 @@ int	main(void)
 		return (1);
 		//exit(EXIT_FAILURE);
 	}
-	game.win = mlx_new_window(game.mlx, 1920, 1080, "Hello world!");
+	game.win = mlx_new_window(game.mlx, 300, 300, "Hello world!");
 	if (game.win == NULL)
 	{
 	    perror("Failed to initialise MiniLibX");
@@ -93,20 +102,22 @@ int	main(void)
 	//mlx_hook(game.win, DestroyNotify, StructureNotifyMask, &on_destroy, &game);
 	
 	img.win = game;
-	img.img = mlx_new_image(game.mlx, 4, 4);
+	img.img = mlx_new_image(game.mlx, 300, 300);
 	// if (img.img == NULL)
 	//     exit(EXIT_FAILURE);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	img.width = 4;
-	img.height = 4;
+	img.width = 300;
+	img.height = 300;
 	printf("Let's Find out what's inside our structure :D\n");
 	printf("img_ptr		: [%p]\n", img.img);
 	printf("bpp		: [%d]\n", img.bits_per_pixel);
 	printf("line_len	: [%d]\n", img.line_length);
 	printf("endian		: [%d]\n", img.endian);
 	printf("addr		: [%p]\n", img.addr);
-	memcpy(img.addr, "s4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vf", 16*4);
+	//memcpy(img.addr, "s4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vf", 16*4);
+	put_pixel_img(img, 150, 150, 0x00FFFFFF);
 	mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
+	mlx_hook(game.win, 17, 1L << 0, exit_game, &game);
 	// my_mlx_pixel_put(&img, 5, 5, 0xFFFF0000);
 	// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(game.mlx);
