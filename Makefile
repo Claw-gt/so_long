@@ -6,7 +6,7 @@
 #    By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/01 11:06:50 by clagarci          #+#    #+#              #
-#    Updated: 2024/09/03 12:57:54 by clagarci         ###   ########.fr        #
+#    Updated: 2024/09/03 16:40:42 by clagarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ NAME = so_long
 # LIBS =  #-lft  #-lXext -lX11 -lm
 MLX_DIR = minilibx-linux/ #libft/ 
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
-MY_SOURCES = src/so_long.c #src/tutorial.c
+MY_SOURCES = src/tutorial.c # src/so_long.c 
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
 CC = gcc
 CFLAGS += -Wall -Wextra -Werror -fsanitize=address
-MLX_FLAGS = -Lminilibx-linux -lmlx -L/usr/lib/X11 -lXext -lX11 #-L./libft 
+MLX_FLAGS = -Lminilibx-linux -lmlx -L/usr/lib/X11 -lXext -lX11 -lm #math.h #-L./libft 
 INCLUDES = -I/usr/include -Imlx
 GREEN = \033[0;32m
 RED = \033[0;31m

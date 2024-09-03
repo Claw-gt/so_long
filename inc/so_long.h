@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/03 13:14:15 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:39:43 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <math.h>
 
 enum {
 	ON_KEYDOWN = 2,
@@ -28,11 +28,11 @@ enum {
 };
 
 enum {
-	ESC = 65307;
-	W = 119;
-	A = 97;
-	S = 115;
-	D = 100;
+	ESC = 65307,
+	W = 119,
+	A = 97,
+	S = 115,
+	D = 100,
 };
 
 typedef struct s_game 

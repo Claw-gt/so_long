@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:51:58 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/03 13:27:13 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:33:44 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int on_destroy(t_game *game)
 int on_keypress(int keycode, t_game *game)
 {
 	printf("Pressed key: %d\n", keycode);
-	if (keycode == 0xff1b)
+	if (keycode == ESC)
 		on_destroy(game);
 	return (0);
 }
@@ -65,18 +65,19 @@ int main(void)
     t_game	game;
 	t_image	img;
     //t_image character;
-    char    *relative_path;
-    int     image_width;
-    int     image_height;
+    // char    *relative_path;
+    // int     image_width;
+    // int     image_height;
 
-    image_width = 50;
-    image_height = 50;
-    relative_path = "../textures/Link.xpm";
-	game = new_game(640, 480, "Hello");
+    // image_width = 50;
+    // image_height = 50;
+    // relative_path = "../textures/Link.xpm";
+	game = new_game(640, 360, "Hello");
 	if (!game.mlx || !game.win)
 		return (1);
-    img  = new_img(1920, 1080, game);
-    //put_pixel_img(img, 500, 500, 0x00FF0000);
+    img  = new_img(500, 500, game);
+	// mlx_pixel_put(game.mlx, game.win, 640/2, 360/2, 0xFFFFFF);
+    // put_pixel_img(img, 500, 500, 0x00FF00);
 	// mlx_put_image_to_window(game.mlx, game.win, img.img, 0, 0);
     mlx_key_hook(game.win, on_keypress, &game);
 	mlx_hook(game.win, ON_DESTROY, 1L << 0, on_destroy, &game);

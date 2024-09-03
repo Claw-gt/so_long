@@ -6,12 +6,11 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/03 12:55:13 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:39:09 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
-
 
 void	put_pixel_img(t_image img, int x, int y, int color)
 {
@@ -39,6 +38,24 @@ void	draw_square(t_square square, t_image img)
 			j++;
 		}
 		i++;
+	}
+}
+
+void	draw_line(t_game game, int beginX, int beginY, int endX, int endY, int color)
+{
+	double deltaX = endX - beginX; // 10
+	double deltaY = endY - beginY; // 0
+	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
+	deltaX /= pixels; // 1
+	deltaY /= pixels; // 0
+	double pixelX = beginX;
+	double pixelY = beginY;
+	while (pixels)
+	{
+		mlx_pixel_put(game.mlx, game.win, pixelX, pixelY, color);
+		pixelX += deltaX;
+		pixelY += deltaY;
+		--pixels;
 	}
 }
 
@@ -120,6 +137,7 @@ int	main(void)
 		draw_square(square, img);
 		mlx_put_image_to_window (img.win.mlx, img.win.win, img.img, 0, 0);	
 	}
+	draw_line(game, 640, 360, 0, 0, 0xFFFFFF);
 	// img.win = game;
 	// img.img = mlx_new_image(game.mlx, 300, 300);
 	// // if (img.img == NULL)
