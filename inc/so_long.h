@@ -6,16 +6,23 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/03 16:39:43 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:08:58 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minilibx-linux/mlx.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
+#ifndef SO_LONG_H
+# define SO_LONG_H
+# include "../minilibx-linux/mlx.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <math.h>
+# define CHARACTER = "./textures/Grass_01.xpm"
+# define FLOOR = "./textures/Grass_01.xpm"
+# define WALL = ""
+# define PLAYER = ""
+# define EXIT = ""
 
 enum {
 	ON_KEYDOWN = 2,
@@ -35,20 +42,33 @@ enum {
 	D = 100,
 };
 
+typedef	struct s_vector
+{
+	int		x;
+	int		y;
+}			t_vector;
+
+typedef struct s_map 
+{
+	
+}				t_map;
+
 typedef struct s_game 
 {
-	void	*mlx;
-	void	*win;
-	int		height;
-	int		width;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	int			height;
+	int			width;
+	// t_image		character;
+	t_vector	character_pos;
 	//void	*textures[5];
 	//t_map	*map;
 }				t_game;
 
 typedef struct s_image 
 {
-	t_game	win;
-	void	*img;
+	t_game	window;
+	void	*img_ptr;
 	char	*addr;
 	int		height;
 	int		width;
@@ -63,3 +83,5 @@ typedef struct s_square {
 	unsigned short int	size;
 	int					color;
 }		t_square;
+
+#endif
