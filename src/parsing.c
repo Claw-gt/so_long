@@ -6,21 +6,37 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/05 15:15:45 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:37:13 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-t_vector   open_map(char *path)
+// static void	*free_map(char **arr, int num)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < num)
+// 	{
+// 		free (arr[i]);
+// 		i++;
+// 	}
+// 	free (arr);
+// 	return (NULL);
+// }
+
+void   open_map(char *path)
 {
     int		    file;
 	char	    *str;
-	t_vector	size;
     size_t		rows;
     size_t		cols;
     int			first;
+	t_map		map;
+	// int			i;
 
+	// i = 0;
     first = 1;
     rows = 0;
     cols = 0;
@@ -36,6 +52,7 @@ t_vector   open_map(char *path)
         {
 			free (str);
             perror("Wrong map dimensions");
+			return ;
 			//exit (0);
 	        exit(EXIT_FAILURE);
         }
@@ -45,10 +62,26 @@ t_vector   open_map(char *path)
         rows++;
         ft_printf("\n********\n");
     }
-	size.x = cols - 1;
-	size.y = rows;
-	ft_printf("Rows: %d Cols: %d", size.y, size.x);
-	return (size);
+	close(file);
+	map.size.x = cols - 1;
+	map.size.y = rows;
+	ft_printf("Rows: %d Cols: %d", map.size.y, map.size.x);
+	// map.map = (char **)ft_calloc(sizeof(char *), (rows + 1));
+	// if (!map.map)
+	// 	return ;
+	// file = open(path, O_RDONLY);
+	// if (file == -1)
+    //     exit(1);
+	// while (cols-- > 0)
+	// {
+	// 	map.map[i] = (char *)ft_calloc(sizeof(char), (map.size.x + 1));
+	// 	if (!map.map[i])
+	// 	{
+	// 		free_map(map.map, i);
+	// 		return ;
+	// 	}
+	// 	map.map[i] = get_next_line(file);
+	// 	i++;
+	// }
+	//free(map.map);
 }
-
-//t_map	store_map()

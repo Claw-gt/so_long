@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/05 15:12:35 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:27:14 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ typedef struct s_square {
 
 char	*get_next_line(int fd);
 
-t_vector   	open_map(char *path);
+void   	open_map(char *path);
 #endif
