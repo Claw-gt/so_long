@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/04 14:12:09 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/05 14:41:39 by clagarci         ###   ########.fr       */
+/*   Created: 2024/03/01 17:54:30 by clagarci          #+#    #+#             */
+/*   Updated: 2024/03/14 19:22:24 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
-# endif
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# include <stdarg.h>
 # include <unistd.h>
-# include <stdlib.h>
 # include <limits.h>
+# include <stdlib.h>
 
-char	*get_next_line(int fd);
+int	ft_printf(char const *param, ...);
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+int	ft_putchar(char c);
 
-char	*ft_strchr(const char *s, int c);
+int	ft_putstr(char *s);
 
-char	*ft_strdup(const char *s1);
+int	ft_putnbr_int(int n);
 
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+int	ft_putnbr_uint(unsigned int n, char *base);
 
-char	*ft_strjoin(char const *s1, char const *s2);
+int	ft_putnbr_lint(unsigned long int n);
+
 #endif

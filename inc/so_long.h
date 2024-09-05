@@ -6,17 +6,19 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/05 14:08:58 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:46:07 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # include "../minilibx-linux/mlx.h"
+# include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
+# include <fcntl.h>
 # include <math.h>
 # define CHARACTER = "./textures/Grass_01.xpm"
 # define FLOOR = "./textures/Grass_01.xpm"
@@ -84,4 +86,5 @@ typedef struct s_square {
 	int					color;
 }		t_square;
 
+char	*get_next_line(int fd);
 #endif
