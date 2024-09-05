@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/05 14:54:01 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:04:58 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,6 @@ int	main(void)
 	//t_image	img;
 	//char	*path;
 	t_image	character;
-	int		file;
-	char	*map;
 	// int		img_width;
 	// int		img_height;
 	
@@ -133,18 +131,7 @@ int	main(void)
 	game.character_pos.x = 0;
 	game.character_pos.y = 0;
 	mlx_put_image_to_window (game.mlx_ptr, game.win_ptr, character.img_ptr, game.character_pos.x = 0, game.character_pos.y = 0);
-	file = open("maps/map1.ber", O_RDONLY);
-	if (file == -1)
-        exit(1);
-	while ((map = get_next_line(file)))
-    {
-        printf("\n********\n");
-        printf("sol_str\n");
-        write(1, map, ft_strlen(map));
-        free (map);
-        printf("\n********\n");
-    }
-	
+	open_map("maps/map1.ber");
 	// game.mlx = mlx_init();
 	// if (game.mlx == NULL)
 	// {

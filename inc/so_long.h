@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/05 14:46:07 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:12:35 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef	struct s_vector
 
 typedef struct s_map 
 {
-	
+	t_vector	size;
+	char		**map;
 }				t_map;
 
 typedef struct s_game 
@@ -87,4 +88,6 @@ typedef struct s_square {
 }		t_square;
 
 char	*get_next_line(int fd);
+
+t_vector   	open_map(char *path);
 #endif

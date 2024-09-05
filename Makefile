@@ -6,7 +6,7 @@
 #    By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/01 11:06:50 by clagarci          #+#    #+#              #
-#    Updated: 2024/09/05 14:50:03 by clagarci         ###   ########.fr        #
+#    Updated: 2024/09/05 15:05:33 by clagarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = so_long
 LIBDIR = libft/
 MLX_DIR = minilibx-linux/ 
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
-MY_SOURCES = src/tutorial.c # src/so_long.c 
+MY_SOURCES = src/tutorial.c src/parsing.c# src/so_long.c 
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
