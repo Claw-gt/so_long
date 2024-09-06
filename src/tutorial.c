@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/06 12:50:06 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:43:16 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int	main(int argc, char **argv)
 	//t_image	img;
 	//char	*path;
 	t_image	character;
-	t_map	map;
 	// int		img_width;
 	// int		img_height;
 	
@@ -145,12 +144,11 @@ int	main(int argc, char **argv)
 	game.character_pos.x = 0;
 	game.character_pos.y = 0;
 	mlx_put_image_to_window (game.mlx_ptr, game.win_ptr, character.img_ptr, game.character_pos.x = 0, game.character_pos.y = 0);
-	map = open_map("maps/map1.ber");
-	if (map.map == NULL)
+	game.map = parse_map(MAP_PATH);
+	if (game.map.size.x == 0 || game.map.size.y == 0)
 	{
-		exit(EXIT_FAILURE);
 		perror("Map is not valid");
-		//return (1);
+		return (1);
 	}
 	// game.mlx = mlx_init();
 	// if (game.mlx == NULL)
@@ -197,7 +195,8 @@ int	main(int argc, char **argv)
 	printf("addr		: [%p]\n", img.addr);
 	// put_pixel_img(img, 150, 150, 0x00FFFFFF);*/
 	// mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
-	free_map(map.map, map.size.y);
+	
+	//free_map(map.map, map.size.y);
 	mlx_key_hook(game.win_ptr, key_hook, &game); //same as mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
 	//mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
 	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, on_destroy, &game);
