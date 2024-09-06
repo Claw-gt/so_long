@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 14:12:09 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/05 14:41:39 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:37:45 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include "libft.h"
 
 char	*get_next_line(int fd);
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-
-char	*ft_strchr(const char *s, int c);
-
-char	*ft_strdup(const char *s1);
-
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-
-char	*ft_strjoin(char const *s1, char const *s2);
 #endif

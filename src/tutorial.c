@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/05 15:04:58 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:50:06 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,24 +114,44 @@ t_image	new_img(int width, int height, t_game window)
 	return (image);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_game	game;
 	//t_image	img;
 	//char	*path;
 	t_image	character;
+	t_map	map;
 	// int		img_width;
 	// int		img_height;
 	
+	if (argc != 2)
+	{
+		perror("Wrong number of arguments");
+		return (1);
+	}
+	else
+	{
+		if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber", 4) != 0)
+		{
+			perror("Wrong file extension");
+			return (1);
+		}
+	}
 	//path = "../textures/Link.xpm";
-	game = new_game(1920, 1080, "tutorial");
+	game = new_game(600, 600, "tutorial");
 	if (!game.mlx_ptr || !game.win_ptr)
 		return (1);
 	character = ft_new_sprite(game.mlx_ptr, "./textures/Grass_01.xpm");
 	game.character_pos.x = 0;
 	game.character_pos.y = 0;
 	mlx_put_image_to_window (game.mlx_ptr, game.win_ptr, character.img_ptr, game.character_pos.x = 0, game.character_pos.y = 0);
-	open_map("maps/map1.ber");
+	map = open_map("maps/map1.ber");
+	if (map.map == NULL)
+	{
+		exit(EXIT_FAILURE);
+		perror("Map is not valid");
+		//return (1);
+	}
 	// game.mlx = mlx_init();
 	// if (game.mlx == NULL)
 	// {
@@ -177,7 +197,7 @@ int	main(void)
 	printf("addr		: [%p]\n", img.addr);
 	// put_pixel_img(img, 150, 150, 0x00FFFFFF);*/
 	// mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
-
+	free_map(map.map, map.size.y);
 	mlx_key_hook(game.win_ptr, key_hook, &game); //same as mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
 	//mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
 	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, on_destroy, &game);
