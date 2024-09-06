@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/06 11:40:03 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:27:09 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
-# define CHARACTER = "./textures/Grass_01.xpm"
-# define FLOOR = "./textures/Grass_01.xpm"
-# define WALL = ""
-# define PLAYER = ""
-# define EXIT = ""
+# define MAP_PATH "./maps/map1.ber"
+# define FLOOR_PATH "./textures/Grass_01.xpm"
+# define WALL_PATH ""
+# define PLAYER_PATH ""
+# define EXIT_PATH ""
 
 enum {
 	ON_KEYDOWN = 2,
@@ -44,16 +44,32 @@ enum {
 	D = 100,
 };
 
+enum {
+	ERROR_ARGS = 1,
+	ERROR_FILE = 2,
+	ERROR_MAP_SIZE = 3,
+	ERROR_MAP_WALLS = 4,
+	ERROR_MAP_CHARACTERS = 5,
+	ERROR_MAP_COLLECTABLE = 6,
+	ERROR_MAP_PLAYER = 7,
+	ERROR_MAP_EXIT = 8,
+	ERROR_MAP_PATH = 9,
+};
+
 typedef	struct s_vector
 {
-	int		x;
-	int		y;
+	size_t		x;
+	size_t		y;
 }			t_vector;
 
 typedef struct s_map 
 {
 	t_vector	size;
 	char		**map;
+	int			collectable;
+	int			exit;
+	int			player;
+	t_vector	player_pos;
 }				t_map;
 
 typedef struct s_game 
@@ -65,7 +81,7 @@ typedef struct s_game
 	// t_image		character;
 	t_vector	character_pos;
 	//void	*textures[5];
-	//t_map	*map;
+	t_map		map;
 }				t_game;
 
 typedef struct s_image 
@@ -89,7 +105,9 @@ typedef struct s_square {
 
 char	*get_next_line(int fd);
 
-t_map   open_map(char *path);
+t_map	parse_map(char *path);
 
 void	*free_map(char **map, int num);
+
+void    ft_error(int error_code);
 #endif
