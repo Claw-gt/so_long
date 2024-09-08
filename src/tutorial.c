@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/06 15:43:16 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/08 19:47:35 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int	main(int argc, char **argv)
 	game.character_pos.x = 0;
 	game.character_pos.y = 0;
 	mlx_put_image_to_window (game.mlx_ptr, game.win_ptr, character.img_ptr, game.character_pos.x = 0, game.character_pos.y = 0);
-	game.map = parse_map(MAP_PATH);
+	game.map = parse_map(argv[1]);
 	if (game.map.size.x == 0 || game.map.size.y == 0)
 	{
 		perror("Map is not valid");

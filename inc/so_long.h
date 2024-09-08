@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/08 19:28:10 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/08 19:39:26 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_map
 	int			exit;
 	int			player;
 	t_vector	player_pos;
+	t_vector	exit_pos;
 }				t_map;
 
 typedef struct s_game 
