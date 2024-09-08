@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/06 17:21:41 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/08 19:30:44 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	*free_map(char **map, int num)
 }
 void	print_map(t_map map)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < map.size.y)
@@ -37,18 +37,10 @@ void	print_map(t_map map)
 		i++;
 	}
 }
-
-// void	check_path(t_map *map)
-// {
-// 	t_map	map_aux;
-	
-// 	map_aux = *map;
-// 	flood_fill()
-// }
 void	check_elements(t_map *map)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = -1;
 	j = -1;
@@ -64,7 +56,11 @@ void	check_elements(t_map *map)
 			map->map[i][j] != 'E' && map->map[i][j] != 'C')
 				ft_error(ERROR_MAP_CHARACTERS);
 			if (map->map[i][j] == 'P')
+			{
+				map->player_pos.x = j;
+				map->player_pos.y = i;
 				map->player++;
+			}
 			else if (map->map[i][j] == 'E')
 				map->exit++;
 			else if (map->map[i][j] == 'C')
@@ -133,7 +129,7 @@ t_vector	check_dimensions(char *path)
 		ft_error(ERROR_FILE);
 	while ((str = get_next_line(file)))
 	{
-		if (ft_strlen(str) != dim.x && first == 0)
+		if (ft_strlen(str) != (size_t)dim.x && first == 0)
 			ft_error(ERROR_MAP_SIZE);
 		dim.x = ft_strlen(str);
 		first = 0;
@@ -144,11 +140,14 @@ t_vector	check_dimensions(char *path)
 	dim.x--;
 	return (dim);
 }
+
 void	init_map(t_map *map)
 {
 	map->collectable = 0;
 	map->exit = 0;
 	map->player = 0;
+	map->player_pos.x = 0;
+	map->player_pos.y = 0;
 }
 
 t_map   open_map(char *path)
@@ -177,12 +176,13 @@ t_map   open_map(char *path)
 	print_map(map);
 	return (map);
 }
+
 t_map	parse_map(char *path)
 {
 	t_map	map;
 
 	map = open_map(path);
-	printf("Cols: %zu\nRows: %zu\n", map.size.x, map.size.y);
+	printf("Cols: %d\nRows: %d\n", map.size.x, map.size.y);
 	init_map(&map);
 	//check_walls(&map);
 	check_elements(&map);
@@ -193,6 +193,6 @@ t_map	parse_map(char *path)
 		ft_error(ERROR_MAP_EXIT);
 	else if (map.collectable < 1)
 		ft_error(ERROR_MAP_COLLECTABLE);
-	//check_path(&map);
+	check_path(map);
 	return (map);
 }

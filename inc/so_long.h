@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/06 16:27:09 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/08 19:28:10 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ enum {
 
 typedef	struct s_vector
 {
-	size_t		x;
-	size_t		y;
+	int		x;
+	int		y;
 }			t_vector;
 
 typedef struct s_map 
@@ -106,6 +106,10 @@ typedef struct s_square {
 char	*get_next_line(int fd);
 
 t_map	parse_map(char *path);
+
+void	print_map(t_map map);
+
+void	check_path(t_map map);
 
 void	*free_map(char **map, int num);
 
