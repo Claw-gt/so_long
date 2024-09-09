@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/08 19:57:10 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/09 17:22:08 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_map(t_map map)
 	i = 0;
 	while (i < map.size.y)
 	{
-		printf("%s",map.map[i]);
+		printf("%s\n",map.map[i]);
 		i++;
 	}
 }
@@ -118,37 +118,38 @@ void	check_elements(t_map *map)
 // }
 
 
-t_vector	check_dimensions(char *path)
-{
-	int		    file;
-	char	    *str;
-	t_vector    dim;
-	int         first;
+// t_vector	check_dimensions(char *path)
+// {
+// 	int		    file;
+// 	char	    *str;
+// 	t_vector    dim;
+// 	int         first;
 
-	first = 1;
-	dim.y = 0;
-	dim.x = 0;
-	file = open(path, O_RDONLY);
-	if (file == -1)
-		ft_error(ERROR_FILE);
-	while ((str = get_next_line(file)))
-	{
-		//PROBLEMA: gnl no lee el ultimo caracter de la ultima linea pues no hay salto de linea
-		if (ft_strlen(str) != (size_t)dim.x && first == 0)
-		{
-			printf("Prev Dim.x: %d Now Len: %zu\n", dim.x, ft_strlen(str));
-			write(1, str, ft_strlen(str));
-			ft_error(ERROR_MAP_SIZE);
-		}
-		dim.x = ft_strlen(str);
-		first = 0;
-		free (str);
-		dim.y++;
-	}
-	close(file);
-	dim.x--;
-	return (dim);
-}
+// 	first = 1;
+// 	dim.y = 0;
+// 	dim.x = 0;
+// 	file = open(path, O_RDONLY);
+// 	if (file == -1)
+// 		ft_error(ERROR_FILE);
+// 	while ((str = get_next_line(file)))
+// 	{
+// 		//PROBLEMA: gnl no lee el ultimo caracter de la ultima linea pues no hay salto de linea
+// 		if (ft_strlen(str) != (size_t)dim.x && first == 0)
+// 		{
+// 			printf("Prev Dim.x: %d Now Len: %zu\n", dim.x, ft_strlen(str));
+// 			write(1, str, ft_strlen(str));
+// 			ft_error(ERROR_MAP_SIZE);
+// 		}
+// 		dim.x = ft_strlen(str);
+// 		printf("Dim.x: %d\n", dim.x);
+// 		first = 0;
+// 		free (str);
+// 		dim.y++;
+// 	}
+// 	close(file);
+// 	dim.x--;
+// 	return (dim);
+// }
 
 void	init_map(t_map *map)
 {
@@ -161,30 +162,78 @@ void	init_map(t_map *map)
 	map->exit_pos.y = 0;
 }
 
+// t_map   open_map(char *path)
+// {
+//     int		    file;
+// 	char	    *str;
+//     size_t		rows;
+// 	t_map		map;
+
+// 	rows = 0;
+// 	map.size = check_dimensions(path);
+// 	map.map = (char **)malloc(sizeof(char *) * map.size.y);
+// 	if (!map.map)
+// 		exit (EXIT_FAILURE);
+// 	file = open(path, O_RDONLY);
+// 	if (file == -1)
+// 		ft_error(ERROR_FILE);
+// 	while ((str = get_next_line(file)))
+// 	{
+// 		map.map[rows] = ft_strdup(str);
+// 		if (!map.map[rows])
+// 			free_map(map.map, rows);
+// 		free (str);
+// 		rows++;
+// 	}
+// 	print_map(map);
+// 	return (map);
+// }
+void	check_dimensions(t_map *map)
+{
+	int	rows;
+	int	cols;
+	int	first;
+
+	rows = 0;
+	cols = 0;
+	first = 1;
+	while (map->map[rows])
+	{
+		if (ft_strlen(map->map[rows]) != (size_t)cols && first == 0)
+			ft_error(ERROR_MAP_SIZE);
+		cols = ft_strlen(map->map[rows]);
+		first = 0;
+		rows++;
+	}
+	map->size.y = rows;
+	map->size.x = cols;
+}
 t_map   open_map(char *path)
 {
     int		    file;
 	char	    *str;
-    size_t		rows;
 	t_map		map;
+	char		*map_aux;
+	char		*aux;
 
-	rows = 0;
-	map.size = check_dimensions(path);
-	map.map = (char **)malloc(sizeof(char *) * map.size.y);
-	if (!map.map)
+	map_aux = ft_strdup("");
+	if (!map_aux)
 		exit (EXIT_FAILURE);
 	file = open(path, O_RDONLY);
 	if (file == -1)
 		ft_error(ERROR_FILE);
 	while ((str = get_next_line(file)))
 	{
-		map.map[rows] = ft_strdup(str);
-		if (!map.map[rows])
-			free_map(map.map, rows);
+		if (str[0] == '\n')
+			ft_error(ERROR_MAP_SIZE); // para evitar que se lea un salto de linea como una linea
+		aux = ft_strjoin(map_aux, str);
+		free (map_aux);
+		map_aux = aux;
 		free (str);
-		rows++;
 	}
-	print_map(map);
+	map.map = ft_split(map_aux, '\n');
+	free (map_aux);
+	close(file);
 	return (map);
 }
 
@@ -193,11 +242,11 @@ t_map	parse_map(char *path)
 	t_map	map;
 
 	map = open_map(path);
+	check_dimensions(&map);
+	print_map(map);
 	printf("Cols: %d\nRows: %d\n", map.size.x, map.size.y);
 	init_map(&map);
-	//check_walls(&map);
 	check_elements(&map);
-	//count_elements(&map);
 	if (map.player != 1)
 		ft_error(ERROR_MAP_PLAYER);
 	else if (map.exit != 1)
