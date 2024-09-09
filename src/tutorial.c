@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/08 19:47:35 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:45:04 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_image	ft_new_sprite(void *mlx, char *path)
 {
 	t_image	img;
 	
-	img.img_ptr = mlx_xpm_file_to_image(mlx, path, &img.width, &img.height); //Da error. Error en archivo .xpm
+	img.img_ptr = mlx_xpm_file_to_image(mlx, path, &img.width, &img.height);
 	if (!img.img_ptr)
 	 	exit (1);
 	img.addr  = mlx_get_data_addr(img.img_ptr, &(img.bits_per_pixel), &(img.line_length), &(img.endian));
@@ -119,7 +119,7 @@ int	main(int argc, char **argv)
 	t_game	game;
 	//t_image	img;
 	//char	*path;
-	t_image	character;
+	//t_image	character;
 	// int		img_width;
 	// int		img_height;
 	
@@ -137,19 +137,16 @@ int	main(int argc, char **argv)
 		}
 	}
 	//path = "../textures/Link.xpm";
-	game = new_game(600, 600, "tutorial");
+	game = new_game(1920, 1080, "tutorial");
 	if (!game.mlx_ptr || !game.win_ptr)
 		return (1);
-	character = ft_new_sprite(game.mlx_ptr, "./textures/Grass_01.xpm");
-	game.character_pos.x = 0;
-	game.character_pos.y = 0;
-	mlx_put_image_to_window (game.mlx_ptr, game.win_ptr, character.img_ptr, game.character_pos.x = 0, game.character_pos.y = 0);
+	//character = ft_new_sprite(game.mlx_ptr, "./textures/Grass_01.xpm");
+	//game.character_pos.x = 0;
+	//game.character_pos.y = 0;
+	//mlx_put_image_to_window (game.mlx_ptr, game.win_ptr, character.img_ptr, 56, 56);
 	game.map = parse_map(argv[1]);
-	if (game.map.size.x == 0 || game.map.size.y == 0)
-	{
-		perror("Map is not valid");
-		return (1);
-	}
+	assign_textures(&game);
+	display(game);
 	// game.mlx = mlx_init();
 	// if (game.mlx == NULL)
 	// {

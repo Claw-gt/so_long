@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/08 19:39:26 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/09 18:49:49 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
-# define MAP_PATH "./maps/map1.ber"
 # define FLOOR_PATH "./textures/Grass_01.xpm"
 # define WALL_PATH ""
 # define PLAYER_PATH ""
 # define EXIT_PATH ""
+# define COLLECTABLE_PATH ""
 
 enum {
 	ON_KEYDOWN = 2,
@@ -79,9 +79,12 @@ typedef struct s_game
 	void		*win_ptr;
 	int			height;
 	int			width;
-	// t_image		character;
-	t_vector	character_pos;
-	//void	*textures[5];
+	void		*textures[5];
+	//void		*player_img;
+	//void		*exit_img;
+	//void		*collectable_img;
+	//void		*wall_img;
+	//void		*floor_img;
 	t_map		map;
 }				t_game;
 
@@ -104,13 +107,17 @@ typedef struct s_square {
 	int					color;
 }		t_square;
 
-char	*get_next_line(int fd);
+//char	*get_next_line(int fd);
 
 t_map	parse_map(char *path);
 
 void	print_map(t_map map);
 
 void	check_path(t_map map);
+
+void	assign_textures(t_game *game);
+
+void    display(t_game game);
 
 void	*free_map(char **map, int num);
 

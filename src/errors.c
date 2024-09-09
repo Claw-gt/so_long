@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:23 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/06 16:00:54 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/09 18:12:14 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ void    ft_error(int error_code)
         ft_printf("Map must have one exit\n");
     else if (error_code == ERROR_MAP_PATH)
         ft_printf("Map path is invalid\n");
-    //ft_printf("%s\n", str);
     exit (EXIT_FAILURE);
 }

@@ -61,9 +61,8 @@ void	check_path(t_map map)
 	flood_fill(&map_aux, map_aux.player_pos.x, map_aux.player_pos.y);
     print_map(map_aux);
     ft_printf("Collectable %d", map_aux.collectable);
-	if (map_aux.collectable != 0)
-		ft_error(ERROR_MAP_PATH);
-	if (map_aux.map[map_aux.exit_pos.y][map_aux.exit_pos.x] != 'F')
+	if (map_aux.collectable != 0 || \
+    map_aux.map[map_aux.exit_pos.y][map_aux.exit_pos.x] != 'F')
 		ft_error(ERROR_MAP_PATH);
 	free_map(map_aux.map, map_aux.size.y);
 }
