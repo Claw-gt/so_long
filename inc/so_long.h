@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/09 18:49:49 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:41:52 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
-# define FLOOR_PATH "./textures/Grass_01.xpm"
-# define WALL_PATH ""
-# define PLAYER_PATH ""
-# define EXIT_PATH ""
-# define COLLECTABLE_PATH ""
+# define FLOOR_PATH "./possible_sprites/floor.xpm"
+# define WALL_PATH "./possible_sprites/wall.xpm"
+# define PLAYER_PATH "./possible_sprites/Player_img/player_down_transparent.xpm"
+# define EXIT_PATH "./possible_sprites/exit.xpm"
+# define COLLECTABLE_PATH "./possible_sprites/collectable.xpm"
 
 enum {
 	ON_KEYDOWN = 2,
