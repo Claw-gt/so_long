@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/09 19:45:04 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:37:10 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,11 @@ int on_keypress(int keysym, t_game *game)
 int	key_hook(int keycode, t_game *game)
 {
 	printf("Pressed key: %d\n", keycode);
-	if (keycode == 0xff1b)
+	if (keycode == ESC)
 		on_destroy(game);
+	else if (keycode == W || keycode == A || keycode == S || keycode == D)
+		move_player(keycode, game);
+		
 	return (0);
 }
 
@@ -140,6 +143,7 @@ int	main(int argc, char **argv)
 	game = new_game(1920, 1080, "tutorial");
 	if (!game.mlx_ptr || !game.win_ptr)
 		return (1);
+	game.counter = 0;
 	//character = ft_new_sprite(game.mlx_ptr, "./textures/Grass_01.xpm");
 	//game.character_pos.x = 0;
 	//game.character_pos.y = 0;
@@ -192,8 +196,7 @@ int	main(int argc, char **argv)
 	printf("addr		: [%p]\n", img.addr);
 	// put_pixel_img(img, 150, 150, 0x00FFFFFF);*/
 	// mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
-	
-	//free_map(map.map, map.size.y);
+	free_map(game.map.map, game.map.size.y);
 	mlx_key_hook(game.win_ptr, key_hook, &game); //same as mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
 	//mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
 	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, on_destroy, &game);

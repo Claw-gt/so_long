@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/10 11:41:52 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:29:54 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_game
 	//void		*wall_img;
 	//void		*floor_img;
 	t_map		map;
+	int			counter;
 }				t_game;
 
 typedef struct s_image 
@@ -118,6 +119,8 @@ void	check_path(t_map map);
 void	assign_textures(t_game *game);
 
 void    display(t_game game);
+
+int    move_player(int keycode, t_game *game);
 
 void	*free_map(char **map, int num);
 
