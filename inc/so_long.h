@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/10 13:29:54 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:44:50 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,21 @@ void	check_path(t_map map);
 
 void	assign_textures(t_game *game);
 
-void    display(t_game game);
+void    render_map(t_game game);
 
-int    move_player(int keycode, t_game *game);
+void	move_up(t_game *game);
+
+void	move_down(t_game *game);
+
+void	move_left(t_game *game);
+
+void	move_right(t_game *game);
+
+int    	move_player(int keycode, t_game *game);
 
 void	*free_map(char **map, int num);
 
 void    ft_error(int error_code);
+
+int exit_game(t_game *game);
 #endif

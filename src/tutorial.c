@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/10 13:37:10 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:44:35 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,11 @@ void	draw_line(t_game game, int beginX, int beginY, int endX, int endY, int colo
 	}
 }
 
-int on_destroy(t_game *game)
+int exit_game(t_game *game)
 {
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	mlx_destroy_display(game->mlx_ptr);
+	free_map(game->map.map, game->map.size.y);
 	free(game->mlx_ptr);
 	exit(EXIT_SUCCESS);
 	return (0);
@@ -89,10 +90,21 @@ int	key_hook(int keycode, t_game *game)
 {
 	printf("Pressed key: %d\n", keycode);
 	if (keycode == ESC)
-		on_destroy(game);
-	else if (keycode == W || keycode == A || keycode == S || keycode == D)
-		move_player(keycode, game);
-		
+		exit_game(game);
+	if (game->map.player_pos.x < game->map.size.x && game->map.player_pos.y < game->map.size.y)
+	{
+		if (keycode == W && game->map.map[game->map.player_pos.y - 1][game->map.player_pos.x] != '1')
+			move_up(game);
+		else if (keycode == A && game->map.map[game->map.player_pos.y][game->map.player_pos.x - 1] != '1')
+			move_left(game);
+		else if (keycode == S && game->map.map[game->map.player_pos.y + 1][game->map.player_pos.x] != '1')
+			move_down(game);
+		else if (keycode == D && game->map.map[game->map.player_pos.y][game->map.player_pos.x + 1] != '1')
+			move_right(game);
+		render_map(*game);
+	}
+	// else if (keycode == W || keycode == A || keycode == S || keycode == D)
+	// 	move_player(keycode, game);
 	return (0);
 }
 
@@ -140,7 +152,7 @@ int	main(int argc, char **argv)
 		}
 	}
 	//path = "../textures/Link.xpm";
-	game = new_game(1920, 1080, "tutorial");
+	game = new_game(500, 500, "tutorial");
 	if (!game.mlx_ptr || !game.win_ptr)
 		return (1);
 	game.counter = 0;
@@ -150,7 +162,7 @@ int	main(int argc, char **argv)
 	//mlx_put_image_to_window (game.mlx_ptr, game.win_ptr, character.img_ptr, 56, 56);
 	game.map = parse_map(argv[1]);
 	assign_textures(&game);
-	display(game);
+	render_map(game);
 	// game.mlx = mlx_init();
 	// if (game.mlx == NULL)
 	// {
@@ -196,10 +208,11 @@ int	main(int argc, char **argv)
 	printf("addr		: [%p]\n", img.addr);
 	// put_pixel_img(img, 150, 150, 0x00FFFFFF);*/
 	// mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
-	free_map(game.map.map, game.map.size.y);
+	
+	//free_map(game.map.map, game.map.size.y); //modifico todo el rato el mapa
 	mlx_key_hook(game.win_ptr, key_hook, &game); //same as mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
 	//mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
-	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, on_destroy, &game);
+	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, exit_game, &game);
 	mlx_loop(game.mlx_ptr);
 	return (0);
 }
