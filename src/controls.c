@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:50:26 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/12 14:46:56 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:37:35 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,20 @@
 
 void	move_up(t_game *game)
 {
-	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
+		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.y--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
 		game->map.collectable--;
-	else if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'E' && \
-		game->map.collectable == 0)
-	{
-		ft_printf("You win!\n");
-		exit_game(game);
-	}
-	
 	//game->textures[2] = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/Player_img/player_up_transparent.xpm", &game->width, &game->height);
-	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
-		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
-	else
-		ft_printf("You need to collect all the collectables first!\n");
+	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	game->counter++;
 	//render_map(*game);
 }
 void	move_down(t_game *game)
 {
-	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
+		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.y++;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
 		game->map.collectable--;
@@ -46,7 +38,8 @@ void	move_down(t_game *game)
 
 void	move_left(t_game *game)
 {
-	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
+		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.x--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
 		game->map.collectable--;
@@ -57,7 +50,8 @@ void	move_left(t_game *game)
 
 void	move_right(t_game *game)
 {
-	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
+		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.x++;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
 		game->map.collectable--;

@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/12 14:44:35 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:48:13 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,15 @@ int exit_game(t_game *game)
 	exit(EXIT_SUCCESS);
 	return (0);
 }
-
+void	player_on_exit(t_game game)
+{
+	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], game.map.player_pos.x, rows * 20);
+	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * 20, rows * 20);
+	if (game.map.collectable == 0)
+		exit_game(&game);
+	else
+		ft_printf("You need to collect all the collectables first!\n");
+}
 int on_keypress(int keysym, t_game *game)
 {
 	(void)game;
@@ -101,7 +109,10 @@ int	key_hook(int keycode, t_game *game)
 			move_down(game);
 		else if (keycode == D && game->map.map[game->map.player_pos.y][game->map.player_pos.x + 1] != '1')
 			move_right(game);
-		render_map(*game);
+		if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'E')
+			player_on_exit(*game);
+		else
+			render_map(*game);
 	}
 	// else if (keycode == W || keycode == A || keycode == S || keycode == D)
 	// 	move_player(keycode, game);
