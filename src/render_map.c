@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/12 15:42:11 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/13 17:59:49 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,25 @@ void    render_map(t_game game)
 		cols = 0;
 		while (game.map.map[rows][cols])
 		{
-			if (game.map.map[rows][cols] == '1')
-				mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[1], cols * 20, rows * 20);
-			else if (game.map.map[rows][cols] == 'P')
-				mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], cols * 20, rows * 20);
-			else if (game.map.map[rows][cols] == 'E')
-				mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * 20, rows * 20);
-			else if (game.map.map[rows][cols] == 'C')
-				mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[4], cols * 20, rows * 20);
+			if (game.map.map[rows][cols] == 'E' && game.map.player_pos.x == cols && game.map.player_pos.y == rows)
+			{
+				player_on_exit(game, rows, cols);
+				// mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * 20, rows * 20);
+				// mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], cols * 20, rows * 20);
+			}
+			else
+			{
+				if (game.map.map[rows][cols] == '1')
+					mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[1], cols * 20, rows * 20);
+				else if (game.map.map[rows][cols] == 'E')
+					mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * 20, rows * 20);
+				else if (game.map.map[rows][cols] == 'P')
+					mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], cols * 20, rows * 20);
+				else if (game.map.map[rows][cols] == 'C')
+					mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[4], cols * 20, rows * 20);
+			}
 			cols++;
 		}
 		rows++;
 	}
-	//mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], game.map.player_pos.x * 20, game.map.player_pos.y * 20);
 }

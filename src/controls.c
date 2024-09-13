@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:50:26 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/12 15:37:35 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/13 17:44:18 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	move_up(t_game *game)
 {
-	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
-		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
-	game->map.player_pos.y--;
-	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
+	if (game->map.map[game->map.player_pos.y - 1][game->map.player_pos.x] == 'C')
 		game->map.collectable--;
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
+	{
+		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
+		game->map.map[game->map.player_pos.y - 1][game->map.player_pos.x] = 'P';
+	}
+	game->map.player_pos.y--;
 	//game->textures[2] = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/Player_img/player_up_transparent.xpm", &game->width, &game->height);
-	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	game->counter++;
 	//render_map(*game);
 }
@@ -31,7 +33,8 @@ void	move_down(t_game *game)
 	game->map.player_pos.y++;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
 		game->map.collectable--;
-	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
+		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	game->counter++;
 	//render_map(*game);
 }
@@ -43,7 +46,8 @@ void	move_left(t_game *game)
 	game->map.player_pos.x--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
 		game->map.collectable--;
-	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')	
+		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	game->counter++;
 	//render_map(*game);
 }
@@ -55,7 +59,8 @@ void	move_right(t_game *game)
 	game->map.player_pos.x++;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
 		game->map.collectable--;
-	game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')	
+		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	game->counter++;
 	//render_map(*game);
 }
