@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/14 12:08:17 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/14 12:52:29 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,17 @@ int exit_game(t_game *game)
 }
 void	player_on_exit(t_game game, int rows, int cols)
 {
-	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * 20, rows * 20);
-	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], cols * 20, rows * 20);
+	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * 50, rows * 50);
+	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], cols * 50, rows * 50);
 	//ft_printf("Player pos: %d %d Exit pos: %d %d\n", game.map.player_pos.x, game.map.player_pos.y, game.map.exit_pos.x, game.map.exit_pos.y);
 	if (game.map.collectable == 0)
 		exit_game(&game);
 	else
 		ft_printf("You need to collect all the collectables first!\n");
 }
-int on_keypress(int keysym, t_game *game)
-{
-	(void)game;
-	printf("Pressed key: %d\n", keysym);
-	return (0);
-}
 int	key_hook(int keycode, t_game *game)
 {
-	printf("Pressed key: %d\n", keycode);
+	//printf("Pressed key: %d\n", keycode);
 	if (keycode == ESC)
 		exit_game(game);
 	if (game->map.player_pos.x < game->map.size.x && game->map.player_pos.y < game->map.size.y)
@@ -110,6 +104,7 @@ int	key_hook(int keycode, t_game *game)
 			move_down(game);
 		else if (keycode == D && game->map.map[game->map.player_pos.y][game->map.player_pos.x + 1] != '1')
 			move_right(game);
+		ft_printf("Moves: %d\n", game->counter);
 		render_map(*game);
 		// if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'E')
 		// 	player_on_exit(*game);
