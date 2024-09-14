@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/13 18:12:23 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/14 12:08:17 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ t_image	new_img(int width, int height, t_game window)
 int	main(int argc, char **argv)
 {
 	t_game	game;
+	t_map	map;
 	//t_image	img;
 	//char	*path;
 	//t_image	character;
@@ -160,17 +161,22 @@ int	main(int argc, char **argv)
 			return (1);
 		}
 	}
-	//path = "../textures/Link.xpm";
-	game = new_game(500, 500, "tutorial");
+	// game = new_game(500, 500, "tutorial");
+	// if (!game.mlx_ptr || !game.win_ptr)
+	// 	return (1);
+	// game.counter = 0;
+	//game.map = parse_map(argv[1]);
+	map = parse_map(argv[1]);
+	//game.height = game.map.size.y * 50;
+	//game.width = game.map.size.x * 50;
+	game.height = map.size.y * 50;
+	game.width = map.size.x * 50;
+	game = new_game(game.width, game.height, "tutorial");
 	if (!game.mlx_ptr || !game.win_ptr)
 		return (1);
 	game.counter = 0;
-	//character = ft_new_sprite(game.mlx_ptr, "./textures/Grass_01.xpm");
-	//game.character_pos.x = 0;
-	//game.character_pos.y = 0;
-	//mlx_put_image_to_window (game.mlx_ptr, game.win_ptr, character.img_ptr, 56, 56);
-	game.map = parse_map(argv[1]);
 	assign_textures(&game);
+	game.map = map;
 	render_map(game);
 	// game.mlx = mlx_init();
 	// if (game.mlx == NULL)
