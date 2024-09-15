@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/14 12:38:29 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/15 13:46:51 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	render_floor(t_game game)
 		cols = 0;
 		while (game.map.map[rows][cols])
 		{
-			//*20 pues la imagen mide 20*20
 			mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[0], cols * 50, rows * 50); //para que se impriman consecutivamente y no uno encima del otro
 			cols++;
 		}
