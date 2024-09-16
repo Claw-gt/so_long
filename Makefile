@@ -6,7 +6,7 @@
 #    By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/01 11:06:50 by clagarci          #+#    #+#              #
-#    Updated: 2024/09/16 13:27:33 by clagarci         ###   ########.fr        #
+#    Updated: 2024/09/16 16:03:39 by clagarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MY_SOURCES = src/so_long.c src/parse_map.c src/check_path.c src/render_map.c src
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
 CC = gcc
-CFLAGS += -Wall -Wextra -Werror -fsanitize=address
+CFLAGS += -Wall -Wextra -Werror -fsanitize=address -static-libasan
 LIB_FLAGS =  -L./libft -lft -lm
 MLX_FLAGS = -Lminilibx-linux -lmlx -L/usr/lib/X11 -lXext -lX11
 INCLUDES = -I/usr/include -Imlx

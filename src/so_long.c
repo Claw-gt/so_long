@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/16 13:33:06 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:26:58 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	draw_line(t_game game, int beginX, int beginY, int endX, int endY, int colo
 
 int exit_game(t_game *game)
 {
+	mlx_destroy_image(game->mlx_ptr, game->textures[0]);
+	mlx_destroy_image(game->mlx_ptr, game->textures[1]);
+	mlx_destroy_image(game->mlx_ptr, game->textures[2]);
+	mlx_destroy_image(game->mlx_ptr, game->textures[3]);
+	mlx_destroy_image(game->mlx_ptr, game->textures[4]);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	mlx_destroy_display(game->mlx_ptr);
 	free_map(game->map.map, game->map.size.y);
@@ -151,6 +156,11 @@ void	check_args(int argc, char **argv)
 	}
 }
 
+void	leaks(void)
+{
+	system("leaks -q so_long");
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -161,6 +171,7 @@ int	main(int argc, char **argv)
 	// int		img_width;
 	// int		img_height;
 	
+	atexit(leaks);
 	check_args(argc, argv);
 	map = parse_map(argv[1]);
 	game = new_game("undertale", map);
@@ -189,7 +200,6 @@ int	main(int argc, char **argv)
 	// img.width = 300;
 	// img.height = 300;
 	// mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
-	
 	mlx_key_hook(game.win_ptr, key_hook, &game);
 	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, exit_game, &game);
 	mlx_loop(game.mlx_ptr);

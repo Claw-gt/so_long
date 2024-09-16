@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/16 13:05:50 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:27:08 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,22 @@
 # include <fcntl.h>
 # include <math.h>
 # define TILE_SIZE 50
+# define ON_DESTROY 17
 # define FLOOR_PATH "./possible_sprites/floor.xpm"
 # define WALL_PATH "./possible_sprites/wall.xpm"
 # define PLAYER_PATH "./possible_sprites/Player_img/player_down_transparent.xpm"
 # define EXIT_PATH "./possible_sprites/exit.xpm"
 # define COLLECTABLE_PATH "./possible_sprites/collectable.xpm"
 
-enum {
-	ON_KEYDOWN = 2,
-	ON_KEYUP = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
-	ON_DESTROY = 17
-};
+// enum {
+// 	ON_KEYDOWN = 2,
+// 	ON_KEYUP = 3,
+// 	ON_MOUSEDOWN = 4,
+// 	ON_MOUSEUP = 5,
+// 	ON_MOUSEMOVE = 6,
+// 	ON_EXPOSE = 12,
+// 	ON_DESTROY = 17
+// };
 
 enum {
 	ESC = 65307,
