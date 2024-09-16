@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tutorial.c                                         :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/16 13:05:54 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:33:06 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,17 @@ int	key_hook(int keycode, t_game *game)
 	return (0);
 }
 
-t_game	new_game(int width, int height, char *str)
+t_game	new_game(char *str, t_map map)
 {
 	t_game	game;
 
+	game.height = map.size.y * TILE_SIZE;
+	game.width = map.size.x * TILE_SIZE;
+	game.map = map;
+	game.counter = 0;
 	game.mlx_ptr = mlx_init();
-	game.win_ptr = mlx_new_window(game.mlx_ptr, width, height, str);
+	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, str);
+	assign_textures(&game);
 	return (game);
 }
 
@@ -158,31 +163,10 @@ int	main(int argc, char **argv)
 	
 	check_args(argc, argv);
 	map = parse_map(argv[1]);
-	game.height = map.size.y * TILE_SIZE;
-	game.width = map.size.x * TILE_SIZE;
-	game = new_game(game.width, game.height, "tutorial");
+	game = new_game("undertale", map);
 	if (!game.mlx_ptr || !game.win_ptr)
 		return (1);
-	game.counter = 0;
-	assign_textures(&game);
-	game.map = map;
 	render_map(game);
-	// game.mlx = mlx_init();
-	// if (game.mlx == NULL)
-	// {
-	// 	perror("Failed to initialise MiniLibX");
-	// 	return (1);
-	// 	//exit(EXIT_FAILURE);
-	// }
-	// game.win = mlx_new_window(game.mlx, 300, 300, "Hello world!");
-	// if (game.win == NULL)
-	// {
-	//     perror("Failed to initialise MiniLibX");
-	//     free (game.mlx);
-	// 	return (1);
-	// 	//exit(EXIT_FAILURE);
-	// }
-	
 	/*PRUEBAS DE IMPRESIÓN DE CUADRADO VERDE Y LÍNEA DIAGONAL BLANCA
 	
 	img  = new_img(1920, 1080, game);
@@ -204,16 +188,8 @@ int	main(int argc, char **argv)
 	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	// img.width = 300;
 	// img.height = 300;
-	/*printf("Let's Find out what's inside our structure :D\n");
-	printf("img_ptr		: [%p]\n", img.img);
-	printf("bpp		: [%d]\n", img.bits_per_pixel);
-	printf("line_len	: [%d]\n", img.line_length);
-	printf("endian		: [%d]\n", img.endian);
-	printf("addr		: [%p]\n", img.addr);
-	// put_pixel_img(img, 150, 150, 0x00FFFFFF);*/
 	// mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
 	
-	//free_map(game.map.map, game.map.size.y); //modifico todo el rato el mapa
 	mlx_key_hook(game.win_ptr, key_hook, &game);
 	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, exit_game, &game);
 	mlx_loop(game.mlx_ptr);
