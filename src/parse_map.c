@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/09 17:22:08 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:23:15 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	print_map(t_map map)
 		i++;
 	}
 }
-void	check_elements(t_map *map)
+
+void	check_walls(t_map *map)
 {
 	int	i;
 	int	j;
@@ -46,25 +47,40 @@ void	check_elements(t_map *map)
 	j = -1;
 	while (++i < map->size.y)
 	{
-		j = 0;
+		j = -1;
 		while (++j < map->size.x)
-		{
-			if (map->map[0][j] != '1' || map->map[map->size.y - 1][j] != '1' || \
+			if (map->map[0][j] != '1' || map->map[map->size.y - 1][j] != '1' || 
 			 map->map[i][0] != '1' || map->map[i][map->size.x - 1] != '1')
 				ft_error(ERROR_MAP_WALLS);
-			if (map->map[i][j] != '1' && map->map[i][j] != '0' && map->map[i][j] != 'P' && \
-			map->map[i][j] != 'E' && map->map[i][j] != 'C')
-				ft_error(ERROR_MAP_CHARACTERS);
+	}
+}
+void	check_character(char element)
+{
+	if (element != '1' && element != '0' && element != 'P' && 
+	element != 'E' && element != 'C')
+		ft_error(ERROR_MAP_CHARACTERS);
+}
+void	count_elements(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (++i < map->size.y)
+	{
+		j = -1;
+		while (++j < map->size.x)
+		{
+			check_character(map->map[i][j]);
 			if (map->map[i][j] == 'P')
 			{
-				map->player_pos.x = j;
-				map->player_pos.y = i;
+				map->player_pos = (t_vector){j, i};
 				map->player++;
 			}
 			else if (map->map[i][j] == 'E')
 			{
-				map->exit_pos.x = j;
-				map->exit_pos.y = i;
+				map->exit_pos = (t_vector){j, i};
 				map->exit++;
 			}
 			else if (map->map[i][j] == 'C')
@@ -100,22 +116,7 @@ void	check_elements(t_map *map)
 // 		ft_error(ERROR_MAP_COLLECTABLE);
 // }
 
-// void	check_walls(t_map *map)
-// {
-// 	size_t	i;
-// 	size_t	j;
 
-// 	i = -1;
-// 	j = -1;
-// 	while (++i < map->size.y)
-// 	{
-// 		j = 0;
-// 		while (++j < map->size.x)
-// 			if (map->map[0][j] != '1' || map->map[map->size.y - 1][j] != '1' || 
-// 			 map->map[i][0] != '1' || map->map[i][map->size.x - 1] != '1')
-// 				ft_error(ERROR_MAP_WALLS);
-// 	}
-// }
 
 
 // t_vector	check_dimensions(char *path)
@@ -246,7 +247,8 @@ t_map	parse_map(char *path)
 	print_map(map);
 	printf("Cols: %d\nRows: %d\n", map.size.x, map.size.y);
 	init_map(&map);
-	check_elements(&map);
+	check_walls(&map);
+	count_elements(&map);
 	if (map.player != 1)
 		ft_error(ERROR_MAP_PLAYER);
 	else if (map.exit != 1)

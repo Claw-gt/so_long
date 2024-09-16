@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/13 18:11:35 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:05:50 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
+# define TILE_SIZE 50
 # define FLOOR_PATH "./possible_sprites/floor.xpm"
 # define WALL_PATH "./possible_sprites/wall.xpm"
 # define PLAYER_PATH "./possible_sprites/Player_img/player_down_transparent.xpm"
@@ -46,14 +47,15 @@ enum {
 
 enum {
 	ERROR_ARGS = 1,
-	ERROR_FILE = 2,
-	ERROR_MAP_SIZE = 3,
-	ERROR_MAP_WALLS = 4,
-	ERROR_MAP_CHARACTERS = 5,
-	ERROR_MAP_COLLECTABLE = 6,
-	ERROR_MAP_PLAYER = 7,
-	ERROR_MAP_EXIT = 8,
-	ERROR_MAP_PATH = 9,
+	ERROR_EXTENSION = 2,
+	ERROR_FILE = 3,
+	ERROR_MAP_SIZE = 4,
+	ERROR_MAP_WALLS = 5,
+	ERROR_MAP_CHARACTERS = 6,
+	ERROR_MAP_COLLECTABLE = 7,
+	ERROR_MAP_PLAYER = 8,
+	ERROR_MAP_EXIT = 9,
+	ERROR_MAP_PATH = 10,
 };
 
 typedef	struct s_vector
@@ -79,7 +81,7 @@ typedef struct s_game
 	void		*win_ptr;
 	int			height;
 	int			width;
-	void		*textures[5];
+	void		*textures[7];
 	//void		*player_img;
 	//void		*exit_img;
 	//void		*collectable_img;
@@ -119,6 +121,8 @@ void	check_path(t_map map);
 void	assign_textures(t_game *game);
 
 void    render_map(t_game game);
+
+void	render_frame(t_game game, t_vector previous_pos);
 
 void	player_on_exit(t_game game, int rows, int cols);
 

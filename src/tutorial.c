@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/15 13:39:15 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:05:54 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int exit_game(t_game *game)
 }
 void	player_on_exit(t_game game, int rows, int cols)
 {
-	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * 50, rows * 50);
-	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], cols * 50, rows * 50);
+	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * TILE_SIZE, rows * TILE_SIZE);
+	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], cols * TILE_SIZE, rows * TILE_SIZE);
 	//ft_printf("Player pos: %d %d Exit pos: %d %d\n", game.map.player_pos.x, game.map.player_pos.y, game.map.exit_pos.x, game.map.exit_pos.y);
 	if (game.map.collectable == 0)
 		exit_game(&game);
@@ -91,6 +91,9 @@ void	player_on_exit(t_game game, int rows, int cols)
 }
 int	key_hook(int keycode, t_game *game)
 {
+	t_vector	previous_pos;
+
+	previous_pos = game->map.player_pos;
 	//printf("Pressed key: %d\n", keycode);
 	if (keycode == ESC)
 		exit_game(game);
@@ -105,9 +108,8 @@ int	key_hook(int keycode, t_game *game)
 		else if (keycode == D && game->map.map[game->map.player_pos.y][game->map.player_pos.x + 1] != '1')
 			move_right(game);
 		ft_printf("Moves: %d\n", game->counter);
-		render_map(*game);
-		// if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'E')
-		// 	player_on_exit(*game);
+		render_frame(*game, previous_pos); //render frame instead of the whole map each time
+		//render_map(*game);
 	}
 	return (0);
 }
@@ -133,6 +135,17 @@ t_image	new_img(int width, int height, t_game window)
 	return (image);
 }
 
+void	check_args(int argc, char **argv)
+{
+	if (argc != 2)
+		ft_error(ERROR_ARGS);
+	else
+	{
+		if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber", 4) != 0)
+			ft_error(ERROR_EXTENSION);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -143,29 +156,10 @@ int	main(int argc, char **argv)
 	// int		img_width;
 	// int		img_height;
 	
-	if (argc != 2)
-	{
-		perror("Wrong number of arguments");
-		return (1);
-	}
-	else
-	{
-		if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber", 4) != 0)
-		{
-			perror("Wrong file extension");
-			return (1);
-		}
-	}
-	// game = new_game(500, 500, "tutorial");
-	// if (!game.mlx_ptr || !game.win_ptr)
-	// 	return (1);
-	// game.counter = 0;
-	//game.map = parse_map(argv[1]);
+	check_args(argc, argv);
 	map = parse_map(argv[1]);
-	//game.height = game.map.size.y * 50;
-	//game.width = game.map.size.x * 50;
-	game.height = map.size.y * 50;
-	game.width = map.size.x * 50;
+	game.height = map.size.y * TILE_SIZE;
+	game.width = map.size.x * TILE_SIZE;
 	game = new_game(game.width, game.height, "tutorial");
 	if (!game.mlx_ptr || !game.win_ptr)
 		return (1);
@@ -220,8 +214,7 @@ int	main(int argc, char **argv)
 	// mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
 	
 	//free_map(game.map.map, game.map.size.y); //modifico todo el rato el mapa
-	mlx_key_hook(game.win_ptr, key_hook, &game); //same as mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
-	//mlx_hook(game.win, ON_KEYUP, 1L << 0, key_hook, &game);
+	mlx_key_hook(game.win_ptr, key_hook, &game);
 	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, exit_game, &game);
 	mlx_loop(game.mlx_ptr);
 	return (0);

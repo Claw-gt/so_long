@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:23 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/09 18:12:14 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:06:06 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void    ft_error(int error_code)
     ft_printf("Error\n");
     if (error_code == ERROR_ARGS)
         ft_printf("Invalid number of arguments\n");
+    else if (error_code == ERROR_EXTENSION)
+        ft_printf("Invalid file extension\n");
     else if (error_code == ERROR_FILE)
         ft_printf("Invalid file\n");
     else if (error_code == ERROR_MAP_SIZE)
