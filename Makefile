@@ -6,7 +6,7 @@
 #    By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/01 11:06:50 by clagarci          #+#    #+#              #
-#    Updated: 2024/09/14 10:52:51 by clagarci         ###   ########.fr        #
+#    Updated: 2024/09/16 13:27:33 by clagarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = so_long
 LIBDIR = libft/
 MLX_DIR = minilibx-linux/ 
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
-MY_SOURCES = src/tutorial.c src/parse_map.c src/check_path.c src/render_map.c src/move_player.c src/errors.c # src/so_long.c 
+MY_SOURCES = src/so_long.c src/parse_map.c src/check_path.c src/render_map.c src/move_player.c src/errors.c
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
