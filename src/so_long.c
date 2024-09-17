@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/17 14:43:57 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:53:05 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ void	player_on_exit(t_game game, int rows, int cols)
 {
 	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.exit_img, cols * TILE_SIZE, rows * TILE_SIZE);
 	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.player_img, cols * TILE_SIZE, rows * TILE_SIZE);
-	//ft_printf("Player pos: %d %d Exit pos: %d %d\n", game.map.player_pos.x, game.map.player_pos.y, game.map.exit_pos.x, game.map.exit_pos.y);
-	mlx_string_put(game.mlx_ptr, game.win_ptr, 50, 40, 0xffffff, "STAY DETERMINED!");
+	mlx_string_put(game.mlx_ptr, game.win_ptr, game.map.size.x / 2 * TILE_SIZE, 25, 0xffffff, "STAY DETERMINED!");
 	if (game.map.collectable == 0)
 	{
 		ft_printf("You WON!\n");
@@ -117,6 +116,8 @@ int	key_hook(int keycode, t_game *game)
 		else if (keycode == D && game->map.map[game->map.player_pos.y][game->map.player_pos.x + 1] != '1')
 			move_right(game);
 		//ft_printf("Moves: %d\n", game->counter);
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_img, game->map.size.x / 2 * TILE_SIZE, 0 * TILE_SIZE);
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_img, (game->map.size.x / 2 + 1) * TILE_SIZE, 0 * TILE_SIZE);
 		count_string = ft_itoa(game->counter);
 		ft_printf("Moves: %s\n", count_string);
 		mlx_string_put(game->mlx_ptr, game->win_ptr, 10, 20, 0xffffff, "Moves:");
