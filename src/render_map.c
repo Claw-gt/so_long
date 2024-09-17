@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/16 16:26:52 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:32:57 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	assign_textures(t_game *game)
 
 void	render_frame(t_game game, t_vector previous_pos)
 {
-	if (game.map.map[game.map.player_pos.y][game.map.player_pos.x] == 'E')
-		player_on_exit(game, game.map.player_pos.y, game.map.player_pos.x);
-	else
-		mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], game.map.player_pos.x * TILE_SIZE, game.map.player_pos.y * TILE_SIZE);
 	if (game.map.map[previous_pos.y][previous_pos.x] == '0')
 		mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[0], previous_pos.x * TILE_SIZE, previous_pos.y * TILE_SIZE);
 	else if (game.map.map[previous_pos.y][previous_pos.x] == 'E')
 		mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], previous_pos.x * TILE_SIZE, previous_pos.y * TILE_SIZE);
+	if (game.map.map[game.map.player_pos.y][game.map.player_pos.x] == 'E')
+		player_on_exit(game, game.map.player_pos.y, game.map.player_pos.x);
+	else
+		mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], game.map.player_pos.x * TILE_SIZE, game.map.player_pos.y * TILE_SIZE);
 }
 void	render_floor(t_game game)
 {
