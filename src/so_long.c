@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/16 16:48:32 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:59:17 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int exit_game(t_game *game)
 	mlx_destroy_display(game->mlx_ptr);
 	free_map(game->map.map, game->map.size.y);
 	free(game->mlx_ptr);
+	ft_printf("STAY DETERMINED!\n");
 	exit(EXIT_SUCCESS);
 	return (0);
 }
