@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/17 14:36:27 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:43:57 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void	draw_line(t_game game, int beginX, int beginY, int endX, int endY, int colo
 
 int exit_game(t_game *game)
 {
-	mlx_destroy_image(game->mlx_ptr, game->textures[0]);
-	mlx_destroy_image(game->mlx_ptr, game->textures[1]);
-	mlx_destroy_image(game->mlx_ptr, game->textures[2]);
-	mlx_destroy_image(game->mlx_ptr, game->textures[3]);
-	mlx_destroy_image(game->mlx_ptr, game->textures[4]);
+	mlx_destroy_image(game->mlx_ptr, game->floor_img);
+	mlx_destroy_image(game->mlx_ptr, game->wall_img);
+	mlx_destroy_image(game->mlx_ptr, game->player_img);
+	mlx_destroy_image(game->mlx_ptr, game->exit_img);
+	mlx_destroy_image(game->mlx_ptr, game->collectable_img);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	mlx_destroy_display(game->mlx_ptr);
 	free_map(game->map.map, game->map.size.y);
@@ -86,8 +86,8 @@ int exit_game(t_game *game)
 }
 void	player_on_exit(t_game game, int rows, int cols)
 {
-	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[3], cols * TILE_SIZE, rows * TILE_SIZE);
-	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.textures[2], cols * TILE_SIZE, rows * TILE_SIZE);
+	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.exit_img, cols * TILE_SIZE, rows * TILE_SIZE);
+	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.player_img, cols * TILE_SIZE, rows * TILE_SIZE);
 	//ft_printf("Player pos: %d %d Exit pos: %d %d\n", game.map.player_pos.x, game.map.player_pos.y, game.map.exit_pos.x, game.map.exit_pos.y);
 	mlx_string_put(game.mlx_ptr, game.win_ptr, 50, 40, 0xffffff, "STAY DETERMINED!");
 	if (game.map.collectable == 0)
@@ -120,7 +120,7 @@ int	key_hook(int keycode, t_game *game)
 		count_string = ft_itoa(game->counter);
 		ft_printf("Moves: %s\n", count_string);
 		mlx_string_put(game->mlx_ptr, game->win_ptr, 10, 20, 0xffffff, "Moves:");
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->textures[1], 1 * TILE_SIZE, 0 * TILE_SIZE);
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_img, 1 * TILE_SIZE, 0 * TILE_SIZE);
 		mlx_string_put(game->mlx_ptr, game->win_ptr, 50, 20, 0xffffff, count_string);
 		free(count_string);
 		render_frame(*game, previous_pos); //render frame instead of the whole map each time

@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/17 12:33:08 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:44:57 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@
 # define PLAYER_PATH "./possible_sprites/Player_img/player_down_transparent.xpm"
 # define EXIT_PATH "./possible_sprites/exit.xpm"
 # define COLLECTABLE_PATH "./possible_sprites/collectable.xpm"
-
-// enum {
-// 	ON_KEYDOWN = 2,
-// 	ON_KEYUP = 3,
-// 	ON_MOUSEDOWN = 4,
-// 	ON_MOUSEUP = 5,
-// 	ON_MOUSEMOVE = 6,
-// 	ON_EXPOSE = 12,
-// 	ON_DESTROY = 17
-// };
 
 enum {
 	ESC = 65307,
@@ -82,12 +72,11 @@ typedef struct s_game
 	void		*win_ptr;
 	int			height;
 	int			width;
-	void		*textures[7];
-	//void		*player_img;
-	//void		*exit_img;
-	//void		*collectable_img;
-	//void		*wall_img;
-	//void		*floor_img;
+	void		*player_img;
+	void		*exit_img;
+	void		*collectable_img;
+	void		*wall_img;
+	void		*floor_img;
 	t_map		map;
 	int			counter;
 }				t_game;
