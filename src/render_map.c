@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/17 11:43:18 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:35:39 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ void	assign_textures(t_game *game)
 	game->textures[2] = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/50x50/player_33x50.xpm", &game->width, &game->height);
 	game->textures[3] = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/exit2.xpm", &game->width, &game->height);
 	game->textures[4] = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/collectable_small.xpm", &game->width, &game->height);
-	// game->textures[5] = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/50x50/player_up_50.xpm", &game->width, &game->height);
-	// game->textures[6] = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/50x50/player_left_50.xpm", &game->width, &game->height);
-	// game->textures[7] = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/50x50/player_right_50.xpm", &game->width, &game->height);
 	if (!game->textures[0] || !game->textures[1] || !game->textures[2] || !game->textures[3] || !game->textures[4])
 		ft_error(ERROR_FILE);
 }
