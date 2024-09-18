@@ -6,124 +6,148 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/17 14:53:05 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:36:35 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-t_image	ft_new_sprite(void *mlx, char *path)
+int	exit_game(t_game *game)
 {
-	t_image	img;
-	
-	img.img_ptr = mlx_xpm_file_to_image(mlx, path, &img.width, &img.height);
-	if (!img.img_ptr)
-	 	exit (1);
-	img.addr  = mlx_get_data_addr(img.img_ptr, &(img.bits_per_pixel), &(img.line_length), &(img.endian));
-	return (img);
-}
-
-void	put_pixel_img(t_image img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x >= 0 && y >= 0 && x < img.width && y < img.height)
-	{
-		dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
-		*(unsigned int*)dst = color;
-	}
-}
-
-void	draw_square(t_square square, t_image img)
-{
-	unsigned short int	i;
-	unsigned short int	j;
-
-	i = 0;
-	while (i < square.size && i + square.y < img.height)
-	{
-		j = 0;
-		while (j < square.size && j + square.x < img.width)
-		{
-			put_pixel_img(img, j + square.x, i + square.y, square.color);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	draw_line(t_game game, int beginX, int beginY, int endX, int endY, int color)
-{
-	double deltaX = endX - beginX; // 10
-	double deltaY = endY - beginY; // 0
-	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
-	deltaX /= pixels; // 1
-	deltaY /= pixels; // 0
-	double pixelX = beginX;
-	double pixelY = beginY;
-	while (pixels)
-	{
-		mlx_pixel_put(game.mlx_ptr, game.win_ptr, pixelX, pixelY, color);
-		pixelX += deltaX;
-		pixelY += deltaY;
-		--pixels;
-	}
-}
-
-int exit_game(t_game *game)
-{
-	mlx_destroy_image(game->mlx_ptr, game->floor_img);
-	mlx_destroy_image(game->mlx_ptr, game->wall_img);
-	mlx_destroy_image(game->mlx_ptr, game->player_img);
-	mlx_destroy_image(game->mlx_ptr, game->exit_img);
-	mlx_destroy_image(game->mlx_ptr, game->collectable_img);
-	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	mlx_destroy_display(game->mlx_ptr);
+	mlx_destroy_image(game->mlx, game->floor);
+	mlx_destroy_image(game->mlx, game->wall);
+	mlx_destroy_image(game->mlx, game->player);
+	mlx_destroy_image(game->mlx, game->exit);
+	mlx_destroy_image(game->mlx, game->collectable);
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
 	free_map(game->map.map, game->map.size.y);
-	free(game->mlx_ptr);
+	free(game->mlx);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
-void	player_on_exit(t_game game, int rows, int cols)
+
+void	custom_msg(t_game game, int player_on_exit)
 {
-	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.exit_img, cols * TILE_SIZE, rows * TILE_SIZE);
-	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.player_img, cols * TILE_SIZE, rows * TILE_SIZE);
-	mlx_string_put(game.mlx_ptr, game.win_ptr, game.map.size.x / 2 * TILE_SIZE, 25, 0xffffff, "STAY DETERMINED!");
+	int	center_col;
+	int	first_row;
+
+	first_row = TILE_SIZE / 2;
+	center_col = game.map.size.x / 2 * TILE_SIZE;
+	if (player_on_exit == 1)
+	{
+		print_msg(game, center_col, first_row, WHITE, EXIT_MSG);
+		//mlx_string_put(game.mlx, game.win, center_col, first_row, WHITE, EXIT_MSG);
+	}
+	else
+	{
+		print_img(game, game.wall, game.map.size.x / 2 * TILE_SIZE, 0);
+		print_img(game, game.wall, (game.map.size.x / 2 + 1) * TILE_SIZE, 0);
+		//mlx_put_image_to_window(game.mlx, game.win, game.wall, center_col, 0);
+		//mlx_put_image_to_window(game.mlx, game.win, game.wall, center_col + 1, 0);
+	}
+}
+
+void	player_on_exit(t_game game, int r, int c)
+{
+	int	width;
+	int	height;
+
+	width = c * TILE_SIZE;
+	height = r * TILE_SIZE;
+	print_img(game, game.exit, width, height);
+	print_img(game, game.player, width, height);
+	//mlx_put_image_to_window(game.mlx, game.win, game.exit, width, height);
+	//mlx_put_image_to_window(game.mlx, game.win, game.player, width, height);
+	custom_msg(game, 1);
 	if (game.map.collectable == 0)
 	{
 		ft_printf("You WON!\n");
 		exit_game(&game);
 	}
 	else
-		ft_printf("You need to collect all the collectables first!\n");
+	{
+		if (game.map.collectable == 1)
+			ft_printf("You need to collect one last heart!\n");
+		else
+			ft_printf("%d hearts remaining!\n", game.map.collectable);
+	}
 }
+
+void	print_count(t_game game)
+{
+	char	*count_string;
+
+	count_string = ft_itoa(game.counter);
+	ft_printf("Moves: %s\n", count_string);
+	mlx_string_put(game.mlx, game.win, 10, 20, WHITE, "Moves:");
+	print_img(game, game.wall, TILE_SIZE, 0);
+	//mlx_put_image_to_window(mlx, win, img, TILE_SIZE, 0);
+	print_msg(game, 50, 20, WHITE, count_string);
+	//mlx_string_put(game.mlx, game.win, 50, 20, WHITE, count_string);
+	free(count_string);
+}
+
+int	on_wall(t_game game, char *direction)
+{
+	int		x;
+	int		y;
+	char	**map_aux;
+	
+	x = game.map.player_pos.x;
+	y = game.map.player_pos.y;
+	map_aux = game.map.map;
+	if (ft_strncmp(direction, "up", 2) == 0)
+		y -= 1;
+	else if (ft_strncmp(direction, "left", 4) == 0)
+		x -= 1;
+	else if (ft_strncmp(direction, "down", 2) == 0)
+		y += 1;
+	else if (ft_strncmp(direction, "right", 2) == 0)
+		x += 1;
+	if (map_aux[y][x] != '1')
+		return (0);
+	return (1);
+}
+
 int	key_hook(int keycode, t_game *game)
 {
 	t_vector	previous_pos;
-	char		*count_string;
+	t_vector	size;
 
+	size = game->map.size;
 	previous_pos = game->map.player_pos;
 	if (keycode == ESC)
 		exit_game(game);
-	if (game->map.player_pos.x < game->map.size.x && game->map.player_pos.y < game->map.size.y)
+	//if (game->map.player_pos.x < game->map.size.x && game->map.player_pos.y < game->map.size.y)
+	if (previous_pos.x < size.x && previous_pos.y < size.y)
 	{
-		if (keycode == W && game->map.map[game->map.player_pos.y - 1][game->map.player_pos.x] != '1')
+		if (keycode == W && on_wall(*game, "up") == 0)
 			move_up(game);
-		else if (keycode == A && game->map.map[game->map.player_pos.y][game->map.player_pos.x - 1] != '1')
+		else if (keycode == A && on_wall(*game, "left") == 0)
 			move_left(game);
-		else if (keycode == S && game->map.map[game->map.player_pos.y + 1][game->map.player_pos.x] != '1')
+		else if (keycode == S && on_wall(*game, "down") == 0)
 			move_down(game);
-		else if (keycode == D && game->map.map[game->map.player_pos.y][game->map.player_pos.x + 1] != '1')
+		else if (keycode == D && on_wall(*game, "right") == 0)
 			move_right(game);
-		//ft_printf("Moves: %d\n", game->counter);
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_img, game->map.size.x / 2 * TILE_SIZE, 0 * TILE_SIZE);
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_img, (game->map.size.x / 2 + 1) * TILE_SIZE, 0 * TILE_SIZE);
-		count_string = ft_itoa(game->counter);
-		ft_printf("Moves: %s\n", count_string);
-		mlx_string_put(game->mlx_ptr, game->win_ptr, 10, 20, 0xffffff, "Moves:");
-		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->wall_img, 1 * TILE_SIZE, 0 * TILE_SIZE);
-		mlx_string_put(game->mlx_ptr, game->win_ptr, 50, 20, 0xffffff, count_string);
-		free(count_string);
+		//if (keycode == W && game->map.map[previous_pos.y - 1][previous_pos.x] != '1')
+		// 	move_up(game);
+		// else if (keycode == A && game->map.map[previous_pos.y][previous_pos.x - 1] != '1')
+		// 	move_left(game);
+		// else if (keycode == S && game->map.map[previous_pos.y + 1][previous_pos.x] != '1')
+		// 	move_down(game);
+		// else if (keycode == D && game->map.map[previous_pos.y][previous_pos.x + 1] != '1')
+		// 	move_right(game);	
+		// mlx_put_image_to_window(game->mlx, game->win, game->wall, game->map.size.x / 2 * TILE_SIZE, 0 * TILE_SIZE);
+		// mlx_put_image_to_window(game->mlx, game->win, game->wall, (game->map.size.x / 2 + 1) * TILE_SIZE, 0 * TILE_SIZE);
+		custom_msg(*game, 0);
+		print_count(*game);
+		// count_string = ft_itoa(game->counter);
+		// ft_printf("Moves: %s\n", count_string);
+		// mlx_string_put(game->mlx, game->win, 10, 25, WHITE, "Moves:");
+		// mlx_put_image_to_window(game->mlx, game->win, game->wall, 1 * TILE_SIZE, 0 * TILE_SIZE);
+		// mlx_string_put(game->mlx, game->win, 50, 25, WHITE, count_string);
+		// free(count_string);
 		render_frame(*game, previous_pos); //render frame instead of the whole map each time
 		//render_map(*game);
 	}
@@ -138,22 +162,10 @@ t_game	new_game(char *str, t_map map)
 	game.width = map.size.x * TILE_SIZE;
 	game.map = map;
 	game.counter = 0;
-	game.mlx_ptr = mlx_init();
-	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, str);
+	game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, game.width, game.height, str);
 	assign_textures(&game);
 	return (game);
-}
-
-t_image	new_img(int width, int height, t_game window)
-{
-	t_image	image;
-
-	image.window = window;
-	image.img_ptr = mlx_new_image(window.mlx_ptr, width, height);
-	image.addr = mlx_get_data_addr(image.img_ptr, &(image.bits_per_pixel), &(image.line_length), &(image.endian));
-	image.width = width;
-	image.height = height;
-	return (image);
 }
 
 void	check_args(int argc, char **argv)
@@ -176,43 +188,16 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 	t_map	map;
-	//t_image	img;
-	//char	*path;
-	//t_image	character;
-	// int		img_width;
-	// int		img_height;
-	
+
 	atexit(leaks);
 	check_args(argc, argv);
 	map = parse_map(argv[1]);
 	game = new_game("undertale", map);
-	if (!game.mlx_ptr || !game.win_ptr)
+	if (!game.mlx || !game.win)
 		return (1);
 	render_map(game);
-	/*PRUEBAS DE IMPRESIÓN DE CUADRADO VERDE Y LÍNEA DIAGONAL BLANCA
-	
-	img  = new_img(1920, 1080, game);
-	{
-		t_square	square;
-		square.x = 0;
-		square.y = 0;
-		square.size = 300;
-		square.color = 0x00FF00;
-		draw_square(square, img);
-		mlx_put_image_to_window (img.window.mlx_ptr, img.window.win_ptr, img.img_ptr, 0, 0);	
-	}
-	draw_line(game, 640, 360, 0, 0, 0xFFFFFF); */
-	
-	// img.win = game;
-	// img.img = mlx_new_image(game.mlx, 300, 300);
-	// // if (img.img == NULL)
-	// //     exit(EXIT_FAILURE);
-	// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	// img.width = 300;
-	// img.height = 300;
-	// mlx_put_image_to_window(img.win.mlx, img.win.win, img.img, 10, 10);
-	mlx_key_hook(game.win_ptr, key_hook, &game);
-	mlx_hook(game.win_ptr, ON_DESTROY, 1L << 0, exit_game, &game);
-	mlx_loop(game.mlx_ptr);
+	mlx_key_hook(game.win, key_hook, &game);
+	mlx_hook(game.win, ON_DESTROY, 1L << 0, exit_game, &game);
+	mlx_loop(game.mlx);
 	return (0);
 }
