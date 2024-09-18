@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/18 13:51:12 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:46:41 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@
 # include <math.h>
 # define TILE_SIZE 50
 # define ON_DESTROY 17
-# define FLOOR_PATH "./possible_sprites/floor.xpm"
-# define WALL_PATH "./possible_sprites/wall.xpm"
-# define PLAYER_PATH "./possible_sprites/Player_img/player_down_transparent.xpm"
-# define EXIT_PATH "./possible_sprites/exit.xpm"
-# define COLLECTABLE_PATH "./possible_sprites/collectable.xpm"
+# define FLOOR_PATH "./textures/floor.xpm"
+# define WALL_PATH "./textures/wall.xpm"
+# define PLAYER_DOWN_PATH "./textures/player_down.xpm"
+# define PLAYER_UP_PATH "./textures/player_up.xpm"
+# define PLAYER_LEFT_PATH "./textures/player_left.xpm"
+# define PLAYER_RIGHT_PATH "./textures/player_right.xpm"
+# define EXIT_PATH "./textures/exit.xpm"
+# define COLLECTABLE_PATH "./textures/collectable.xpm"
 
 enum {
 	ESC = 65307,
