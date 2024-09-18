@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/17 14:41:15 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:24:13 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void    render_map(t_game game)
 				else if (game.map.map[rows][cols] == 'E')
 					mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.exit_img, cols * TILE_SIZE, rows * TILE_SIZE);
 				else if (game.map.map[rows][cols] == 'P')
-					mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.floor_img, cols * TILE_SIZE, rows * TILE_SIZE);
+					mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.player_img, cols * TILE_SIZE, rows * TILE_SIZE);
 				else if (game.map.map[rows][cols] == 'C')
 					mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.collectable_img, cols * TILE_SIZE, rows * TILE_SIZE);
 			//}
