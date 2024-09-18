@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 22:29:09 by clagarci          #+#    #+#             */
-/*   Updated: 2024/03/16 15:37:14 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:06:23 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	ft_printf(char const *param, ...)
 	int		char_printed;
 	int		aux;
 
-	if (!param)
-		return (0);
 	aux = 0;
 	char_printed = 0;
 	va_start(args, param);

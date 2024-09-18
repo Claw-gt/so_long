@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/18 14:54:45 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:21:30 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
+# define EXIT_MSG "STAY DETERMINED!"
 # define TILE_SIZE 50
+# define WHITE 0xffffff
 # define ON_DESTROY 17
 # define FLOOR_PATH "./textures/floor.xpm"
 # define WALL_PATH "./textures/wall.xpm"
@@ -73,15 +75,15 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	void		*mlx_ptr;
-	void		*win_ptr;
+	void		*mlx;
+	void		*win;
 	int			height;
 	int			width;
-	void		*player_img;
-	void		*exit_img;
-	void		*collectable_img;
-	void		*wall_img;
-	void		*floor_img;
+	void		*player;
+	void		*exit;
+	void		*collectable;
+	void		*wall;
+	void		*floor;
 	t_map		map;
 	int			counter;
 }				t_game;
@@ -135,4 +137,8 @@ void	*free_map(char **map, int num);
 void	ft_error(int error_code);
 
 int		exit_game(t_game *game);
+
+void    print_msg(t_game game, int x, int y, int color, char *str);
+
+void	print_img(t_game game, void *img, int width, int height);
 #endif

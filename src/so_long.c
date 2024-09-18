@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/18 17:36:35 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:38:10 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,17 +137,9 @@ int	key_hook(int keycode, t_game *game)
 		// else if (keycode == S && game->map.map[previous_pos.y + 1][previous_pos.x] != '1')
 		// 	move_down(game);
 		// else if (keycode == D && game->map.map[previous_pos.y][previous_pos.x + 1] != '1')
-		// 	move_right(game);	
-		// mlx_put_image_to_window(game->mlx, game->win, game->wall, game->map.size.x / 2 * TILE_SIZE, 0 * TILE_SIZE);
-		// mlx_put_image_to_window(game->mlx, game->win, game->wall, (game->map.size.x / 2 + 1) * TILE_SIZE, 0 * TILE_SIZE);
+		// 	move_right(game);
 		custom_msg(*game, 0);
 		print_count(*game);
-		// count_string = ft_itoa(game->counter);
-		// ft_printf("Moves: %s\n", count_string);
-		// mlx_string_put(game->mlx, game->win, 10, 25, WHITE, "Moves:");
-		// mlx_put_image_to_window(game->mlx, game->win, game->wall, 1 * TILE_SIZE, 0 * TILE_SIZE);
-		// mlx_string_put(game->mlx, game->win, 50, 25, WHITE, count_string);
-		// free(count_string);
 		render_frame(*game, previous_pos); //render frame instead of the whole map each time
 		//render_map(*game);
 	}
