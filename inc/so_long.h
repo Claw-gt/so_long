@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/18 14:46:41 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:54:45 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # define EXIT_PATH "./textures/exit.xpm"
 # define COLLECTABLE_PATH "./textures/collectable.xpm"
 
-enum {
+enum
+{
 	ESC = 65307,
 	W = 119,
 	A = 97,
@@ -39,7 +40,8 @@ enum {
 	D = 100,
 };
 
-enum {
+enum
+{
 	ERROR_ARGS = 1,
 	ERROR_EXTENSION = 2,
 	ERROR_FILE = 3,
@@ -52,13 +54,13 @@ enum {
 	ERROR_MAP_PATH = 10,
 };
 
-typedef	struct s_vector
+typedef struct s_vector
 {
 	int		x;
 	int		y;
 }			t_vector;
 
-typedef struct s_map 
+typedef struct s_map
 {
 	t_vector	size;
 	char		**map;
@@ -69,7 +71,7 @@ typedef struct s_map
 	t_vector	exit_pos;
 }				t_map;
 
-typedef struct s_game 
+typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
@@ -84,7 +86,7 @@ typedef struct s_game
 	int			counter;
 }				t_game;
 
-typedef struct s_image 
+typedef struct s_image
 {
 	t_game	window;
 	void	*img_ptr;
@@ -96,14 +98,13 @@ typedef struct s_image
 	int		endian;
 }				t_image;
 
-typedef struct s_square {
+typedef struct s_square
+{
 	unsigned short int	x;
 	unsigned short int	y;
 	unsigned short int	size;
 	int					color;
 }		t_square;
-
-//char	*get_next_line(int fd);
 
 t_map	parse_map(char *path);
 
@@ -113,7 +114,7 @@ void	check_path(t_map map);
 
 void	assign_textures(t_game *game);
 
-void    render_map(t_game game);
+void	render_map(t_game game);
 
 void	render_frame(t_game game, t_vector previous_pos);
 
@@ -127,11 +128,11 @@ void	move_left(t_game *game);
 
 void	move_right(t_game *game);
 
-int    	move_player(int keycode, t_game *game);
+int		move_player(int keycode, t_game *game);
 
 void	*free_map(char **map, int num);
 
-void    ft_error(int error_code);
+void	ft_error(int error_code);
 
 int		exit_game(t_game *game);
 #endif
