@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/18 13:24:13 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:51:00 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 void	assign_textures(t_game *game)
 {
 	game->floor_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/50x50/floor_50x50.xpm", &game->width, &game->height);
+	//game->floor_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/floor70x70.xpm", &game->width, &game->height);
 	game->wall_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/50x50/wall_50x50.xpm", &game->width, &game->height);
+	//game->wall_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/wall70x70.xpm", &game->width, &game->height);
 	game->player_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/50x50/player_33x50.xpm", &game->width, &game->height);
+	//game->player_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/player_46x70.xpm", &game->width, &game->height);
 	game->exit_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/exit2.xpm", &game->width, &game->height);
+	//game->exit_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/exit50x50.xpm", &game->width, &game->height);
 	game->collectable_img = mlx_xpm_file_to_image(game->mlx_ptr, "./possible_sprites/collectable_small.xpm", &game->width, &game->height);
 	if (!game->floor_img || !game->wall_img || !game->player_img || !game->exit_img || !game->collectable_img)
 		ft_error(ERROR_FILE);

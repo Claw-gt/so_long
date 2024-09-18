@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/17 15:07:20 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:13:26 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ t_map	open_map(char *path)
 	file = open(path, O_RDONLY);
 	if (file == -1)
 		ft_error(ERROR_FILE);
-	while (str = get_next_line(file))
+	while ((str = get_next_line(file)))
 	{
 		if (str[0] == '\n')
 			ft_error(ERROR_MAP_SIZE); // para evitar que se lea un salto de linea como una linea
@@ -163,6 +163,7 @@ t_map	parse_map(char *path)
 	init_map(&map);
 	check_walls(&map);
 	count_elements(&map);
+	printf("Player position: %d %d", map.player_pos.x, map.player_pos.y);
 	if (map.player != 1)
 		ft_error(ERROR_MAP_PLAYER);
 	else if (map.exit != 1)
