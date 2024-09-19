@@ -18,7 +18,7 @@ void	flood_fill(t_map *map, int x, int y)
 	map->map[y][x] == '1' || map->map[y][x] == 'F')
 		return ;
 	if (map->map[y][x] == 'C')
-		map->collectable--;
+		map->object--;
 	map->map[y][x] = 'F';
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x - 1, y);
@@ -33,7 +33,7 @@ t_map	create_copy(t_map map)
 
 	rows = 0;
 	map_copy.size = map.size;
-	map_copy.collectable = map.collectable;
+	map_copy.object = map.object;
 	map_copy.exit = map.exit;
 	map_copy.player = map.player;
 	map_copy.player_pos = map.player_pos;
@@ -57,8 +57,7 @@ void	check_path(t_map map)
 
 	map_aux = create_copy(map);
 	flood_fill(&map_aux, map_aux.player_pos.x, map_aux.player_pos.y);
-	// print_map(map_aux);
-	if (map_aux.collectable != 0 || \
+	if (map_aux.object != 0 || \
 	map_aux.map[map_aux.exit_pos.y][map_aux.exit_pos.x] != 'F')
 		ft_error(ERROR_MAP_PATH);
 	free_map(map_aux.map, map_aux.size.y);
