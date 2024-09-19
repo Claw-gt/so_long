@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:50:26 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/18 15:21:26 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:11:54 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,41 @@
 
 void	move_up(t_game *game)
 {
+	int	h;
+	int	w;
+
+	h = game->height;
+	w = game->width;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.y--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
-		game->map.collectable--;
+		game->map.object--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	mlx_destroy_image(game->mlx, game->player);
-	game->player = mlx_xpm_file_to_image(game->mlx, PLAYER_UP_PATH, &game->width, &game->height);
+	game->player = mlx_xpm_file_to_image(game->mlx, PLAYER_UP_PATH, &w, &h);
 	if (!game->player)
 		ft_error(ERROR_FILE);
 	game->counter++;
 }
+
 void	move_down(t_game *game)
 {
+	int	h;
+	int	w;
+
+	h = game->height;
+	w = game->width;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.y++;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
-		game->map.collectable--;
+		game->map.object--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	mlx_destroy_image(game->mlx, game->player);
-	game->player = mlx_xpm_file_to_image(game->mlx, PLAYER_DOWN_PATH, &game->width, &game->height);
+	game->player = mlx_xpm_file_to_image(game->mlx, PLAYER_DOWN_PATH, &w, &h);
 	if (!game->player)
 		ft_error(ERROR_FILE);
 	game->counter++;
@@ -45,15 +56,20 @@ void	move_down(t_game *game)
 
 void	move_left(t_game *game)
 {
+	int	h;
+	int	w;
+
+	h = game->height;
+	w = game->width;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.x--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
-		game->map.collectable--;
-	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')	
+		game->map.object--;
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	mlx_destroy_image(game->mlx, game->player);
-	game->player = mlx_xpm_file_to_image(game->mlx, PLAYER_LEFT_PATH, &game->width, &game->height);
+	game->player = mlx_xpm_file_to_image(game->mlx, PLAYER_LEFT_PATH, &w, &h);
 	if (!game->player)
 		ft_error(ERROR_FILE);
 	game->counter++;
@@ -61,15 +77,20 @@ void	move_left(t_game *game)
 
 void	move_right(t_game *game)
 {
+	int	h;
+	int	w;
+
+	h = game->height;
+	w = game->width;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.x++;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
-		game->map.collectable--;
-	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')	
+		game->map.object--;
+	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	mlx_destroy_image(game->mlx, game->player);
-	game->player = mlx_xpm_file_to_image(game->mlx, PLAYER_RIGHT_PATH, &game->width, &game->height);
+	game->player = mlx_xpm_file_to_image(game->mlx, PLAYER_RIGHT_PATH, &w, &h);
 	if (!game->player)
 		ft_error(ERROR_FILE);
 	game->counter++;
