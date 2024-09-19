@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/18 17:38:10 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:59:47 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exit_game(t_game *game)
 	mlx_destroy_image(game->mlx, game->wall);
 	mlx_destroy_image(game->mlx, game->player);
 	mlx_destroy_image(game->mlx, game->exit);
-	mlx_destroy_image(game->mlx, game->collectable);
+	mlx_destroy_image(game->mlx, game->object);
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);
 	free_map(game->map.map, game->map.size.y);
@@ -35,16 +35,11 @@ void	custom_msg(t_game game, int player_on_exit)
 	first_row = TILE_SIZE / 2;
 	center_col = game.map.size.x / 2 * TILE_SIZE;
 	if (player_on_exit == 1)
-	{
-		print_msg(game, center_col, first_row, WHITE, EXIT_MSG);
-		//mlx_string_put(game.mlx, game.win, center_col, first_row, WHITE, EXIT_MSG);
-	}
+		print_msg(game, center_col, first_row, EXIT_MSG);
 	else
 	{
 		print_img(game, game.wall, game.map.size.x / 2 * TILE_SIZE, 0);
 		print_img(game, game.wall, (game.map.size.x / 2 + 1) * TILE_SIZE, 0);
-		//mlx_put_image_to_window(game.mlx, game.win, game.wall, center_col, 0);
-		//mlx_put_image_to_window(game.mlx, game.win, game.wall, center_col + 1, 0);
 	}
 }
 
@@ -57,20 +52,18 @@ void	player_on_exit(t_game game, int r, int c)
 	height = r * TILE_SIZE;
 	print_img(game, game.exit, width, height);
 	print_img(game, game.player, width, height);
-	//mlx_put_image_to_window(game.mlx, game.win, game.exit, width, height);
-	//mlx_put_image_to_window(game.mlx, game.win, game.player, width, height);
 	custom_msg(game, 1);
-	if (game.map.collectable == 0)
+	if (game.map.object == 0)
 	{
 		ft_printf("You WON!\n");
 		exit_game(&game);
 	}
 	else
 	{
-		if (game.map.collectable == 1)
+		if (game.map.object == 1)
 			ft_printf("You need to collect one last heart!\n");
 		else
-			ft_printf("%d hearts remaining!\n", game.map.collectable);
+			ft_printf("%d hearts remaining!\n", game.map.object);
 	}
 }
 
@@ -80,11 +73,9 @@ void	print_count(t_game game)
 
 	count_string = ft_itoa(game.counter);
 	ft_printf("Moves: %s\n", count_string);
-	mlx_string_put(game.mlx, game.win, 10, 20, WHITE, "Moves:");
+	print_msg(game, 10, 20, "Moves:");
 	print_img(game, game.wall, TILE_SIZE, 0);
-	//mlx_put_image_to_window(mlx, win, img, TILE_SIZE, 0);
-	print_msg(game, 50, 20, WHITE, count_string);
-	//mlx_string_put(game.mlx, game.win, 50, 20, WHITE, count_string);
+	print_msg(game, 50, 20, count_string);
 	free(count_string);
 }
 
@@ -93,7 +84,7 @@ int	on_wall(t_game game, char *direction)
 	int		x;
 	int		y;
 	char	**map_aux;
-	
+
 	x = game.map.player_pos.x;
 	y = game.map.player_pos.y;
 	map_aux = game.map.map;
@@ -119,7 +110,6 @@ int	key_hook(int keycode, t_game *game)
 	previous_pos = game->map.player_pos;
 	if (keycode == ESC)
 		exit_game(game);
-	//if (game->map.player_pos.x < game->map.size.x && game->map.player_pos.y < game->map.size.y)
 	if (previous_pos.x < size.x && previous_pos.y < size.y)
 	{
 		if (keycode == W && on_wall(*game, "up") == 0)
@@ -130,18 +120,9 @@ int	key_hook(int keycode, t_game *game)
 			move_down(game);
 		else if (keycode == D && on_wall(*game, "right") == 0)
 			move_right(game);
-		//if (keycode == W && game->map.map[previous_pos.y - 1][previous_pos.x] != '1')
-		// 	move_up(game);
-		// else if (keycode == A && game->map.map[previous_pos.y][previous_pos.x - 1] != '1')
-		// 	move_left(game);
-		// else if (keycode == S && game->map.map[previous_pos.y + 1][previous_pos.x] != '1')
-		// 	move_down(game);
-		// else if (keycode == D && game->map.map[previous_pos.y][previous_pos.x + 1] != '1')
-		// 	move_right(game);
 		custom_msg(*game, 0);
 		print_count(*game);
-		render_frame(*game, previous_pos); //render frame instead of the whole map each time
-		//render_map(*game);
+		render_frame(*game, previous_pos);
 	}
 	return (0);
 }
@@ -173,7 +154,7 @@ void	check_args(int argc, char **argv)
 
 void	leaks(void)
 {
-	system("leaks -q so_long");
+	system("leaks -qso_long");
 }
 
 int	main(int argc, char **argv)
