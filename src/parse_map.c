@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/19 12:51:13 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:01:32 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ void	check_char_and_walls(t_map *map)
 		}
 	}
 }
-
-// void	check_character(char element)
-// {
-// 	if (element != '1' && element != '0' && element != 'P' &&
-// 	element != 'E' && element != 'C')
-// 		ft_error(ERROR_MAP_CHARACTERS);
-// }
 
 void	count_elements(t_map *map)
 {
