@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/19 13:01:32 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:35:27 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	count_elements(t_map *map)
 		j = -1;
 		while (++j < map->size.x)
 		{
-			//check_character(map->map[i][j]);
 			if (map->map[i][j] == 'P')
 			{
 				map->player_pos = (t_vector){j, i};
@@ -122,12 +121,9 @@ t_map	parse_map(char *path)
 	map.map = ft_split(map_aux, '\n');
 	free (map_aux);
 	check_dimensions(&map);
-	print_map(map);
-	printf("Cols: %d\nRows: %d\n", map.size.x, map.size.y);
 	init_map(&map);
 	check_char_and_walls(&map);
 	count_elements(&map);
-	printf("Player position: %d %d", map.player_pos.x, map.player_pos.y);
 	if (map.player != 1)
 		ft_error(ERROR_MAP_PLAYER);
 	else if (map.exit != 1)

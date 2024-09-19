@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/18 16:21:30 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:36:11 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define PLAYER_LEFT_PATH "./textures/player_left.xpm"
 # define PLAYER_RIGHT_PATH "./textures/player_right.xpm"
 # define EXIT_PATH "./textures/exit.xpm"
-# define COLLECTABLE_PATH "./textures/collectable.xpm"
+# define OBJECT_PATH "./textures/collectable.xpm"
 
 enum
 {
@@ -50,7 +50,7 @@ enum
 	ERROR_MAP_SIZE = 4,
 	ERROR_MAP_WALLS = 5,
 	ERROR_MAP_CHARACTERS = 6,
-	ERROR_MAP_COLLECTABLE = 7,
+	ERROR_MAP_OBJECT = 7,
 	ERROR_MAP_PLAYER = 8,
 	ERROR_MAP_EXIT = 9,
 	ERROR_MAP_PATH = 10,
@@ -66,7 +66,7 @@ typedef struct s_map
 {
 	t_vector	size;
 	char		**map;
-	int			collectable;
+	int			object;
 	int			exit;
 	int			player;
 	t_vector	player_pos;
@@ -81,7 +81,7 @@ typedef struct s_game
 	int			width;
 	void		*player;
 	void		*exit;
-	void		*collectable;
+	void		*object;
 	void		*wall;
 	void		*floor;
 	t_map		map;
@@ -134,11 +134,17 @@ int		move_player(int keycode, t_game *game);
 
 void	*free_map(char **map, int num);
 
+void	init_map(t_map *map);
+
 void	ft_error(int error_code);
 
 int		exit_game(t_game *game);
 
-void    print_msg(t_game game, int x, int y, int color, char *str);
+void	custom_msg(t_game game, int player_on_exit);
+
+void	print_count(t_game game);
+
+void	print_msg(t_game game, int x, int y, char *str);
 
 void	print_img(t_game game, void *img, int width, int height);
 #endif

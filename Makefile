@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+         #
+#    By: clagarci <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/01 11:06:50 by clagarci          #+#    #+#              #
-#    Updated: 2024/09/18 16:21:51 by clagarci         ###   ########.fr        #
+#    Updated: 2024/09/19 19:32:55 by clagarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBDIR = libft/
 MLX_DIR = minilibx-linux/ 
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
 MY_SOURCES = src/so_long.c src/parse_map.c src/check_path.c src/render_map.c src/move_player.c \
-			src/errors.c src/reduced_mlx.c
+			src/errors.c src/reduced_mlx.c src/map_utils.c src/print_on_screen.c src/on_exit.c
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 

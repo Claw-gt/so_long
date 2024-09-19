@@ -6,78 +6,11 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/19 12:59:47 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:31:53 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
-
-int	exit_game(t_game *game)
-{
-	mlx_destroy_image(game->mlx, game->floor);
-	mlx_destroy_image(game->mlx, game->wall);
-	mlx_destroy_image(game->mlx, game->player);
-	mlx_destroy_image(game->mlx, game->exit);
-	mlx_destroy_image(game->mlx, game->object);
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free_map(game->map.map, game->map.size.y);
-	free(game->mlx);
-	exit(EXIT_SUCCESS);
-	return (0);
-}
-
-void	custom_msg(t_game game, int player_on_exit)
-{
-	int	center_col;
-	int	first_row;
-
-	first_row = TILE_SIZE / 2;
-	center_col = game.map.size.x / 2 * TILE_SIZE;
-	if (player_on_exit == 1)
-		print_msg(game, center_col, first_row, EXIT_MSG);
-	else
-	{
-		print_img(game, game.wall, game.map.size.x / 2 * TILE_SIZE, 0);
-		print_img(game, game.wall, (game.map.size.x / 2 + 1) * TILE_SIZE, 0);
-	}
-}
-
-void	player_on_exit(t_game game, int r, int c)
-{
-	int	width;
-	int	height;
-
-	width = c * TILE_SIZE;
-	height = r * TILE_SIZE;
-	print_img(game, game.exit, width, height);
-	print_img(game, game.player, width, height);
-	custom_msg(game, 1);
-	if (game.map.object == 0)
-	{
-		ft_printf("You WON!\n");
-		exit_game(&game);
-	}
-	else
-	{
-		if (game.map.object == 1)
-			ft_printf("You need to collect one last heart!\n");
-		else
-			ft_printf("%d hearts remaining!\n", game.map.object);
-	}
-}
-
-void	print_count(t_game game)
-{
-	char	*count_string;
-
-	count_string = ft_itoa(game.counter);
-	ft_printf("Moves: %s\n", count_string);
-	print_msg(game, 10, 20, "Moves:");
-	print_img(game, game.wall, TILE_SIZE, 0);
-	print_msg(game, 50, 20, count_string);
-	free(count_string);
-}
 
 int	on_wall(t_game game, char *direction)
 {
@@ -152,17 +85,11 @@ void	check_args(int argc, char **argv)
 	}
 }
 
-void	leaks(void)
-{
-	system("leaks -qso_long");
-}
-
 int	main(int argc, char **argv)
 {
 	t_game	game;
 	t_map	map;
 
-	atexit(leaks);
 	check_args(argc, argv);
 	map = parse_map(argv[1]);
 	game = new_game("undertale", map);
