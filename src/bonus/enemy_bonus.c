@@ -6,63 +6,144 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:21:32 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 14:11:05 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:45:49 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/so_long_bonus.h"
 
-void	flood_fill_enemy(t_map *map, int x, int y)
+int	on_enemy(t_vector player_pos, t_vector enemy_pos)
 {
-	if (x < 0 || y < 0 || x > (map->size.x - 1) || y > (map->size.y - 1) || \
-	map->map[y][x] == '1' || map->map[y][x] == 'F' || map->map[y][x] == 'C')
-		return ;
-	map->map[y][x] = 'F';
-	flood_fill_enemy(map, x + 1, y);
-	flood_fill_enemy(map, x - 1, y);
-	flood_fill_enemy(map, x, y + 1);
-	flood_fill_enemy(map, x, y - 1);
+	if (player_pos.x == enemy_pos.x && player_pos.y == enemy_pos.y)
+		return (1);
+	ft_printf("Player pos: %d %d\n", player_pos.y, player_pos.x);
+	ft_printf("Enemy pos: %d %d\n", enemy_pos.y, enemy_pos.x);
+	return (0);
 }
 
-t_map	path_enemy(t_map map)
+char	**duplicate_map(t_map map)
 {
-	t_map	map_aux;
+	char	**map_aux;
+	int		rows;
 
-	map_aux = create_copy(map);
-    print_map(map_aux);
-	flood_fill_enemy(&map_aux, map_aux.enemy_pos.x, map_aux.enemy_pos.y);
-	print_map(map_aux);
+	rows = 0;
+	map_aux = (char **)malloc(sizeof(char *) * map.size.y);
+	if (!map_aux)
+		exit (EXIT_FAILURE);
+	while (rows < map.size.y)
+	{
+		map_aux[rows] = ft_strdup(map.enemy_map[rows]);
+		if (!map_aux[rows])
+			free_map(map_aux, rows);
+		rows++;
+	}
 	return (map_aux);
 }
 
-void	move_enemy(t_game *game)
+void	path_enemy(t_map *map)
 {
-	t_map	path;
+	t_map	map_aux;
+	char	**aux;
 
-	path = path_enemy(game->map);
-	if (path.map[game->map.enemy_pos.y][game->map.enemy_pos.x - 1] == 'F')
+	map_aux = create_copy(*map);
+	flood_fill(&map_aux, map_aux.enemy_pos.x, map_aux.enemy_pos.y, 1);
+	map_aux.enemy_map = map_aux.map;
+	aux = duplicate_map(map_aux);
+	if (map->enemy_map)
+		free_map(map->enemy_map, map->size.y);
+	map->enemy_map = aux;
+	print_map(*map);
+	free_map(map_aux.map, map_aux.size.y);
+}
+
+int	on_path(t_game game, char *direction)
+{
+	int		x;
+	int		y;
+	char	**map_aux;
+
+	x = game.map.enemy_pos.x;
+	y = game.map.enemy_pos.y;
+	map_aux = game.map.enemy_map;
+	if (ft_strncmp(direction, "up", 2) == 0)
+		y -= 1;
+	else if (ft_strncmp(direction, "left", 4) == 0)
+		x -= 1;
+	else if (ft_strncmp(direction, "down", 2) == 0)
+		y += 1;
+	else if (ft_strncmp(direction, "right", 2) == 0)
+		x += 1;
+	if (map_aux[y][x] != 'F')
+		return (0);
+	return (1);
+}
+
+void	move_enemy(t_game *game, int *update_path)
+{
+	int	right;
+	int	up;
+	int	left;
+	int	down;
+
+	//if (*update_path == 1)
+	printf("Update path %d\n", *update_path);	
+	path_enemy(&game->map);
+	right = on_path(*game, "right");
+	up = on_path(*game, "up");
+	left = on_path(*game, "left");
+	down = on_path(*game, "down");
+	if (game->map.player_pos.x > game->map.enemy_pos.x && right == 1)
 	{
-		print_img(*game, game->enemy, (game->map.enemy_pos.x - 1) * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		game->map.enemy_pos.x -= 1;
-	}
-	else if (path.map[game->map.enemy_pos.y][game->map.enemy_pos.x + 1] == 'F')
-	{
-		print_img(*game, game->enemy, (game->map.enemy_pos.x + 1) * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		printf("Map; %c\n", game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x]);
+		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
+		{
+			write(1, "Enemy on exit\n", 14);
+			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		}
+		else
+			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.x += 1;
+		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 	}
-	else if (path.map[game->map.enemy_pos.y - 1][game->map.enemy_pos.x] == 'F')
+	else if (game->map.player_pos.y > game->map.enemy_pos.y && down == 1)
 	{
-		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, (game->map.enemy_pos.y - 1) * TILE_SIZE);
-		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		game->map.enemy_pos.y -= 1;
-	}
-	else if (path.map[game->map.enemy_pos.y + 1][game->map.enemy_pos.x] == 'F')
-	{
-		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, (game->map.enemy_pos.y + 1) * TILE_SIZE);
-		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+				printf("Map; %c\n", game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x]);
+		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
+		{
+			write(1, "Enemy on exit\n", 14);
+			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		}
+		else
+			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.y += 1;
+		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 	}
-	//free_map(path.map, path.size.y);
+	else if (game->map.player_pos.x < game->map.enemy_pos.x && left == 1)
+	{
+				printf("Map; %c\n", game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x]);
+		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
+		{
+			write(1, "Enemy on exit\n", 14);
+			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		}
+		else
+			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		game->map.enemy_pos.x -= 1;
+		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+	}
+	else if (game->map.player_pos.y < game->map.enemy_pos.y && up == 1)
+	{
+				printf("Map; %c\n", game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x]);
+		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
+		{
+			write(1, "Enemy on exit\n", 14);
+			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		}
+		else
+			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		game->map.enemy_pos.y -= 1;
+		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+	}
+	if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'P')
+			enemy_attack(game);
 }

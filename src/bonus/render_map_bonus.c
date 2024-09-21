@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 13:54:15 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:38:46 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	assign_textures(t_game *game)
 	game->exit = mlx_xpm_file_to_image(game->mlx, EXIT_PATH, &w, &h);
 	game->object = mlx_xpm_file_to_image(game->mlx, OBJECT_PATH, &w, &h);
 	game->enemy = mlx_xpm_file_to_image(game->mlx, ENEMY_PATH, &w, &h);
+	game->ghost = mlx_xpm_file_to_image(game->mlx, GHOST_PATH, &w, &h);
 	if (!game->floor || !game->wall || !game->player || \
-	!game->exit || !game->object || !game->enemy)
+	!game->exit || !game->object || !game->enemy || !game->ghost)
 		ft_error(ERROR_FILE);
 }
 
@@ -47,6 +48,8 @@ void	render_frame(t_game game, t_vector previous_pos)
 		player_on_exit(game, game.map.player_pos.y, game.map.player_pos.x);
 	else
 		print_img(game, game.player, width, height);
+	if (on_enemy(game.map.player_pos, game.map.enemy_pos) == 1)
+		enemy_attack(game);
 }
 
 void	render_enemy(t_game *game)
@@ -73,7 +76,7 @@ void	render_enemy(t_game *game)
 	game->map.enemy_pos.x = rand_col;
 	game->map.enemy_pos.y = rand_row;
 	ft_printf("\nEnemy pos: %d %d\n", game->map.enemy_pos.y, game->map.enemy_pos.x);
-	move_enemy(game);
+	//move_enemy(game);
 	//ft_printf("Range %d Rand col %d\n", up_bound_col - low_bound + 1, rand_col);
 }
 
@@ -118,5 +121,4 @@ void	render_map(t_game game)
 				print_img(game, game.object, col * TILE_SIZE, row * TILE_SIZE);
 		}
 	}
-	render_enemy(&game);
 }

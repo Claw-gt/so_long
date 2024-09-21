@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:46:55 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 13:43:23 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:53:10 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_map(t_map map)
 	i = 0;
 	while (i < map.size.y)
 	{
-		ft_printf("%s\n", map.map[i]);
+		ft_printf("%s\n", map.enemy_map[i]);
 		i++;
 	}
 }
@@ -49,4 +49,5 @@ void	init_map(t_map *map)
 	map->exit_pos.y = 0;
 	map->enemy_pos.x = 0;
 	map->enemy_pos.y = 0;
+	map->enemy_map = NULL;
 }

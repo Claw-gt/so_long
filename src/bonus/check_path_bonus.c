@@ -12,18 +12,20 @@
 
 #include "../../inc/so_long_bonus.h"
 
-void	flood_fill(t_map *map, int x, int y)
+void	flood_fill(t_map *map, int x, int y, int enemy)
 {
 	if (x < 0 || y < 0 || x > (map->size.x - 1) || y > (map->size.y - 1) || \
 	map->map[y][x] == '1' || map->map[y][x] == 'F')
 		return ;
+	if (enemy == 1 && map->map[y][x] == 'C')
+		return ;
 	if (map->map[y][x] == 'C')
 		map->object--;
 	map->map[y][x] = 'F';
-	flood_fill(map, x + 1, y);
-	flood_fill(map, x - 1, y);
-	flood_fill(map, x, y + 1);
-	flood_fill(map, x, y - 1);
+	flood_fill(map, x + 1, y, enemy);
+	flood_fill(map, x - 1, y, enemy);
+	flood_fill(map, x, y + 1, enemy);
+	flood_fill(map, x, y - 1, enemy);
 }
 
 t_map	create_copy(t_map map)
@@ -58,7 +60,7 @@ void	check_path(t_map map)
 	t_map	map_aux;
 
 	map_aux = create_copy(map);
-	flood_fill(&map_aux, map_aux.player_pos.x, map_aux.player_pos.y);
+	flood_fill(&map_aux, map_aux.player_pos.x, map_aux.player_pos.y, 0);
 	if (map_aux.object != 0 || \
 	map_aux.map[map_aux.exit_pos.y][map_aux.exit_pos.x] != 'F')
 		ft_error(ERROR_MAP_PATH);

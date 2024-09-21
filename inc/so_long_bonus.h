@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:43:13 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 13:57:25 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:45:33 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define EXIT_PATH "./textures/exit.xpm"
 # define OBJECT_PATH "./textures/collectable.xpm"
 # define ENEMY_PATH "./textures/enemy.xpm"
+# define GHOST_PATH "./textures/ghost.xpm"
 
 enum
 {
@@ -67,6 +68,7 @@ typedef struct s_map
 {
 	t_vector	size;
 	char		**map;
+	char		**enemy_map;
 	int			object;
 	int			exit;
 	int			player;
@@ -87,8 +89,10 @@ typedef struct s_game
 	void		*wall;
 	void		*floor;
 	void		*enemy;
+	void		*ghost;
 	t_map		map;
 	int			counter;
+	int			dead;
 }				t_game;
 
 t_map	parse_map(char *path);
@@ -107,17 +111,17 @@ void	render_frame(t_game game, t_vector previous_pos);
 
 void	player_on_exit(t_game game, int rows, int cols);
 
-void	move_up(t_game *game);
+void	move_up(t_game *game, int *update_path);
 
-void	move_down(t_game *game);
+void	move_down(t_game *game, int *update_path);
 
-void	move_left(t_game *game);
+void	move_left(t_game *game, int *update_path);
 
-void	move_right(t_game *game);
+void	move_right(t_game *game, int *update_path);
 
 int		move_player(int keycode, t_game *game);
 
-void	move_enemy(t_game *game);
+void	flood_fill(t_map *map, int x, int y, int enemy);
 
 void	*free_map(char **map, int num);
 
@@ -134,4 +138,16 @@ void	print_count(t_game game);
 void	print_msg(t_game game, int x, int y, char *str);
 
 void	print_img(t_game game, void *img, int width, int height);
+
+void	render_enemy(t_game *game);
+
+void	path_enemy(t_map *map);
+
+void	move_enemy(t_game *game, int *update_path);
+
+int		on_enemy(t_vector player_pos, t_vector enemy_pos);
+
+void	enemy_attack(t_game *game);
+
+void	enemy_on_exit(t_game game, int r, int c);
 #endif

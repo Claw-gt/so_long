@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:29:21 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 13:26:57 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:44:52 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	exit_game(t_game *game)
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);
 	free_map(game->map.map, game->map.size.y);
+	free_map(game->map.enemy_map, game->map.size.y);
 	free(game->mlx);
 	exit(EXIT_SUCCESS);
 	return (0);
@@ -49,4 +50,23 @@ void	player_on_exit(t_game game, int r, int c)
 		else
 			ft_printf("%d hearts remaining!\n", game.map.object);
 	}
+}
+
+void	enemy_on_exit(t_game game, int r, int c)
+{
+	int	width;
+	int	height;
+
+	width = c * TILE_SIZE;
+	height = r * TILE_SIZE;
+	print_img(game, game.exit, width, height);
+	print_img(game, game.enemy, width, height);
+}
+
+void	enemy_attack(t_game *game)
+{
+	print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+	print_img(*game, game->ghost, game->map.player_pos.x * TILE_SIZE, game->map.player_pos.y * TILE_SIZE);
+	ft_printf("You LOSE!\n");
+	game->dead = 1;
 }

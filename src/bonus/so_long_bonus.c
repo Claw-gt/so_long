@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 14:11:40 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:46:12 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,27 @@ int	key_hook(int keycode, t_game *game)
 {
 	t_vector	previous_pos;
 	t_vector	size;
+	int			update_path;
 
+	update_path = 0;
 	size = game->map.size;
 	previous_pos = game->map.player_pos;
-	if (keycode == ESC)
+	if (keycode == ESC || game->dead == 1)
 		exit_game(game);
 	if (previous_pos.x < size.x && previous_pos.y < size.y)
 	{
 		if (keycode == W && on_wall(*game, "up") == 0)
-			move_up(game);
+			move_up(game, &update_path);
 		else if (keycode == A && on_wall(*game, "left") == 0)
-			move_left(game);
+			move_left(game, &update_path);
 		else if (keycode == S && on_wall(*game, "down") == 0)
-			move_down(game);
+			move_down(game, &update_path);
 		else if (keycode == D && on_wall(*game, "right") == 0)
-			move_right(game);
-		//move_enemy(game);
+			move_right(game, &update_path);
 		custom_msg(*game, 0);
 		print_count(*game);
 		render_frame(*game, previous_pos);
+		move_enemy(game, &update_path);
 	}
 	return (0);
 }
@@ -97,6 +99,7 @@ int	main(int argc, char **argv)
 	if (!game.mlx || !game.win)
 		return (1);
 	render_map(game);
+	render_enemy(&game);
 	mlx_key_hook(game.win, key_hook, &game);
 	mlx_hook(game.win, ON_DESTROY, 1L << 0, exit_game, &game);
 	mlx_loop(game.mlx);

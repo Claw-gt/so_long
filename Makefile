@@ -6,7 +6,7 @@
 #    By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/01 11:06:50 by clagarci          #+#    #+#              #
-#    Updated: 2024/09/21 13:30:33 by clagarci         ###   ########.fr        #
+#    Updated: 2024/09/21 17:36:15 by clagarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ MY_BONUS_SOURCES = src/bonus/so_long_bonus.c src/bonus/parse_map_bonus.c src/bon
 MY_BONUS_OBJECTS = $(MY_BONUS_SOURCES:.c=.o)
 
 CC = gcc
-CFLAGS += -Wall -Wextra -Werror -fsanitize=address
+CFLAGS += -Wall -Wextra -Werror -fsanitize=address -static-libasan
 LIB_FLAGS =  -L./libft -lft
 MLX_FLAGS = -Lminilibx-linux -lmlx -L/usr/lib/X11 -lXext -lX11
 INCLUDES = -I/usr/include -Imlx

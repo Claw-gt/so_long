@@ -6,13 +6,13 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:50:26 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 13:27:00 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:00:59 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/so_long_bonus.h"
 
-void	move_up(t_game *game)
+void	move_up(t_game *game, int *update_path)
 {
 	int	h;
 	int	w;
@@ -23,7 +23,10 @@ void	move_up(t_game *game)
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.y--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
+	{
+		*update_path = 1;
 		game->map.object--;
+	}
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	mlx_destroy_image(game->mlx, game->player);
@@ -33,7 +36,7 @@ void	move_up(t_game *game)
 	game->counter++;
 }
 
-void	move_down(t_game *game)
+void	move_down(t_game *game, int *update_path)
 {
 	int	h;
 	int	w;
@@ -44,7 +47,10 @@ void	move_down(t_game *game)
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.y++;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
+	{
+		*update_path = 1;
 		game->map.object--;
+	}
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	mlx_destroy_image(game->mlx, game->player);
@@ -54,7 +60,7 @@ void	move_down(t_game *game)
 	game->counter++;
 }
 
-void	move_left(t_game *game)
+void	move_left(t_game *game, int *update_path)
 {
 	int	h;
 	int	w;
@@ -65,7 +71,10 @@ void	move_left(t_game *game)
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.x--;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
+	{
+		*update_path = 1;
 		game->map.object--;
+	}
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	mlx_destroy_image(game->mlx, game->player);
@@ -75,7 +84,7 @@ void	move_left(t_game *game)
 	game->counter++;
 }
 
-void	move_right(t_game *game)
+void	move_right(t_game *game, int *update_path)
 {
 	int	h;
 	int	w;
@@ -86,7 +95,10 @@ void	move_right(t_game *game)
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = '0';
 	game->map.player_pos.x++;
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] == 'C')
+	{
+		*update_path = 1;
 		game->map.object--;
+	}
 	if (game->map.map[game->map.player_pos.y][game->map.player_pos.x] != 'E')
 		game->map.map[game->map.player_pos.y][game->map.player_pos.x] = 'P';
 	mlx_destroy_image(game->mlx, game->player);

@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 13:26:55 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:33:54 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,7 @@ t_map	parse_map(char *path)
 	else if (map.object < 1)
 		ft_error(ERROR_MAP_OBJECT);
 	check_path(map);
+	path_enemy(&map);
+	//print_map(map);
 	return (map);
 }
