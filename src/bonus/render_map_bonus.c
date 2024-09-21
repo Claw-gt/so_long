@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 20:38:46 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:48:15 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	render_frame(t_game game, t_vector previous_pos)
 	else
 		print_img(game, game.player, width, height);
 	if (on_enemy(game.map.player_pos, game.map.enemy_pos) == 1)
-		enemy_attack(game);
+		enemy_attack(&game);
 }
 
 void	render_enemy(t_game *game)
