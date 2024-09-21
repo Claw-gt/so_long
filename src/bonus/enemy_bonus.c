@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:21:32 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 14:07:21 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 14:11:05 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,29 @@ void	move_enemy(t_game *game)
 	t_map	path;
 
 	path = path_enemy(game->map);
-	while (path.map[game->map.enemy_pos.y][game->map.enemy_pos.x - 1] == 'F')
+	if (path.map[game->map.enemy_pos.y][game->map.enemy_pos.x - 1] == 'F')
 	{
-		//sleep(1);
 		print_img(*game, game->enemy, (game->map.enemy_pos.x - 1) * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.x -= 1;
 	}
-	while (path.map[game->map.enemy_pos.y][game->map.enemy_pos.x + 1] == 'F')
+	else if (path.map[game->map.enemy_pos.y][game->map.enemy_pos.x + 1] == 'F')
 	{
-		//sleep(1);
 		print_img(*game, game->enemy, (game->map.enemy_pos.x + 1) * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.x += 1;
 	}
-	while (path.map[game->map.enemy_pos.y - 1][game->map.enemy_pos.x] == 'F')
+	else if (path.map[game->map.enemy_pos.y - 1][game->map.enemy_pos.x] == 'F')
 	{
-		//sleep(1);
 		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, (game->map.enemy_pos.y - 1) * TILE_SIZE);
 		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.y -= 1;
 	}
-	while (path.map[game->map.enemy_pos.y + 1][game->map.enemy_pos.x] == 'F')
+	else if (path.map[game->map.enemy_pos.y + 1][game->map.enemy_pos.x] == 'F')
 	{
-		//sleep(1);
 		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, (game->map.enemy_pos.y + 1) * TILE_SIZE);
 		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.y += 1;
 	}
-	free_map(path.map, path.size.y);
+	//free_map(path.map, path.size.y);
 }

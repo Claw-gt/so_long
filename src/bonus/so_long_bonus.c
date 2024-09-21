@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 13:41:43 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/21 14:11:40 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	key_hook(int keycode, t_game *game)
 			move_down(game);
 		else if (keycode == D && on_wall(*game, "right") == 0)
 			move_right(game);
+		//move_enemy(game);
 		custom_msg(*game, 0);
 		print_count(*game);
 		render_frame(*game, previous_pos);
