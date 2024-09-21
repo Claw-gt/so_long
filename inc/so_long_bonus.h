@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 12:43:43 by clagarci         ###   ########.fr       */
+/*   Created: 2024/09/21 12:43:13 by clagarci          #+#    #+#             */
+/*   Updated: 2024/09/21 13:57:25 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_map
 	int			player;
 	t_vector	player_pos;
 	t_vector	exit_pos;
+    t_vector    enemy_pos;
 }				t_map;
 
 typedef struct s_game
@@ -100,6 +101,8 @@ void	assign_textures(t_game *game);
 
 void	render_map(t_game game);
 
+t_map	create_copy(t_map map);
+
 void	render_frame(t_game game, t_vector previous_pos);
 
 void	player_on_exit(t_game game, int rows, int cols);
@@ -113,6 +116,8 @@ void	move_left(t_game *game);
 void	move_right(t_game *game);
 
 int		move_player(int keycode, t_game *game);
+
+void	move_enemy(t_game *game);
 
 void	*free_map(char **map, int num);
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: clagarci <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/01 11:06:50 by clagarci          #+#    #+#              #
-#    Updated: 2024/09/19 19:32:55 by clagarci         ###   ########.fr        #
+#    Updated: 2024/09/21 13:30:33 by clagarci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,16 @@ MY_SOURCES = src/so_long.c src/parse_map.c src/check_path.c src/render_map.c src
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
+MY_BONUS_SOURCES = src/bonus/so_long_bonus.c src/bonus/parse_map_bonus.c src/bonus/check_path_bonus.c\
+				src/bonus/render_map_bonus.c src/bonus/move_player_bonus.c src/bonus/errors_bonus.c \
+				src/bonus/reduced_mlx_bonus.c src/bonus/map_utils_bonus.c src/bonus/print_on_screen_bonus.c\
+				src/bonus/on_exit_bonus.c src/bonus/enemy_bonus.c
+
+MY_BONUS_OBJECTS = $(MY_BONUS_SOURCES:.c=.o)
+
 CC = gcc
-CFLAGS += -Wall -Wextra -Werror -fsanitize=address -static-libasan
-LIB_FLAGS =  -L./libft -lft -lm
+CFLAGS += -Wall -Wextra -Werror -fsanitize=address
+LIB_FLAGS =  -L./libft -lft
 MLX_FLAGS = -Lminilibx-linux -lmlx -L/usr/lib/X11 -lXext -lX11
 INCLUDES = -I/usr/include -Imlx
 GREEN = \033[0;32m
@@ -43,8 +50,13 @@ $(NAME): $(MY_OBJECTS)
 $(MLX_LIB):
 		@make -C $(MLX_DIR)
 
+bonus: $(MLX_LIB) $(MY_BONUS_OBJECTS)
+		make -C $(LIBDIR)
+		$(CC) $(CFLAGS) $(MY_BONUS_OBJECTS) -o $(NAME) $(MLX_FLAGS) $(LIB_FLAGS)
+		@echo "\n Compilation of bonus:  $(GREEN)SUCCESS!"
+
 clean:
-	rm -f $(MY_OBJECTS)
+	rm -f $(MY_OBJECTS) $(MY_BONUS_OBJECTS)
 	@make clean -C minilibx-linux
 	@make clean -C libft
 
@@ -54,4 +66,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
