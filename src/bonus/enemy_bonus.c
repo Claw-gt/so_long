@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:21:32 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:18:28 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:23:07 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,6 @@ int	on_enemy(t_vector player_pos, t_vector enemy_pos)
 	if (player_pos.x == enemy_pos.x && player_pos.y == enemy_pos.y)
 		return (1);
 	return (0);
-}
-
-char	**duplicate_map(t_map map)
-{
-	char	**map_aux;
-	int		rows;
-
-	rows = 0;
-	map_aux = (char **)malloc(sizeof(char *) * map.size.y);
-	if (!map_aux)
-		exit (EXIT_FAILURE);
-	while (rows < map.size.y)
-	{
-		map_aux[rows] = ft_strdup(map.enemy_map[rows]);
-		if (!map_aux[rows])
-			free_map(map_aux, rows);
-		rows++;
-	}
-	return (map_aux);
 }
 
 void	path_enemy(t_map *map)
@@ -78,10 +59,15 @@ int	on_path(t_game game, char *direction)
 
 void	persecute_player(t_game *game, char *direction)
 {
+	int	width;
+	int	height;
+
+	width = game->map.enemy_pos.x * TILE_SIZE;
+	height = game->map.enemy_pos.y * TILE_SIZE;
 	if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-		print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		print_img(*game, game->exit, width, height);
 	else
-		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+		print_img(*game, game->floor, width, height);
 	if (ft_strncmp(direction, "up", 2) == 0)
 		game->map.enemy_pos.y -= 1;
 	else if (ft_strncmp(direction, "left", 4) == 0)
@@ -90,7 +76,7 @@ void	persecute_player(t_game *game, char *direction)
 		game->map.enemy_pos.y += 1;
 	else if (ft_strncmp(direction, "right", 2) == 0)
 		game->map.enemy_pos.x += 1;
-	print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+	print_img(*game, game->enemy, width, height);
 }
 
 void	move_enemy(t_game *game, int *update_path)
