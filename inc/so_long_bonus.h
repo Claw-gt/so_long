@@ -6,12 +6,12 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:43:13 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:20:40 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:28:01 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
 # include <unistd.h>
@@ -74,7 +74,7 @@ typedef struct s_map
 	int			player;
 	t_vector	player_pos;
 	t_vector	exit_pos;
-    t_vector    enemy_pos;
+	t_vector	enemy_pos;
 }				t_map;
 
 typedef struct s_game
