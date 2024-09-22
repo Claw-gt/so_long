@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:43:13 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 20:45:33 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:20:40 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ void	print_count(t_game game);
 void	print_msg(t_game game, int x, int y, char *str);
 
 void	print_img(t_game game, void *img, int width, int height);
+
+char	**duplicate_map(t_map map);
 
 void	render_enemy(t_game *game);
 
