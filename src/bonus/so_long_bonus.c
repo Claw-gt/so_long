@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:02:36 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:11:08 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	key_hook(int keycode, t_game *game)
 		custom_msg(*game, 0);
 		print_count(*game);
 		render_frame(*game, previous_pos);
-		move_enemy(game, &update_path);
+		move_enemy(game, &update_path, game->map.enemy_space);
 	}
 	return (0);
 }
@@ -99,8 +99,12 @@ int	main(int argc, char **argv)
 	if (!game.mlx || !game.win)
 		return (1);
 	render_map(game);
-	render_enemy(&game);
-	path_enemy(&game.map);
+	game.map.enemy_space = space_available(game.map);
+	if (game.map.enemy_space == 1)
+	{
+		render_enemy(&game);
+		path_enemy(&game.map);
+	}
 	mlx_key_hook(game.win, key_hook, &game);
 	mlx_hook(game.win, ON_DESTROY, 1L << 0, exit_game, &game);
 	mlx_loop(game.mlx);

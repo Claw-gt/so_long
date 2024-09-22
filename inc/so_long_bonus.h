@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:43:13 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:28:01 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:56:07 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_map
 	int			object;
 	int			exit;
 	int			player;
+	int			enemy_space;
 	t_vector	player_pos;
 	t_vector	exit_pos;
 	t_vector	enemy_pos;
@@ -141,11 +142,13 @@ void	print_img(t_game game, void *img, int width, int height);
 
 char	**duplicate_map(t_map map);
 
+int		space_available(t_map map);
+
 void	render_enemy(t_game *game);
 
 void	path_enemy(t_map *map);
 
-void	move_enemy(t_game *game, int *update_path);
+void	move_enemy(t_game *game, int *update_path, int space_available);
 
 int		on_enemy(t_vector player_pos, t_vector enemy_pos);
 

@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:05:05 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:12:57 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	render_frame(t_game game, t_vector previous_pos)
 		player_on_exit(game, game.map.player_pos.y, game.map.player_pos.x);
 	else
 		print_img(game, game.player, width, height);
-	if (on_enemy(game.map.player_pos, game.map.enemy_pos) == 1)
-		enemy_attack(&game);
 }
 
 void	render_enemy(t_game *game)
@@ -58,17 +56,15 @@ void	render_enemy(t_game *game)
 	int	rand_row;
 	int	up_bound_col;
 	int	up_bound_row;
-	int	low_bound;
 
 	up_bound_col = game->map.size.x - 2;
 	up_bound_row = game->map.size.y - 2;
-	low_bound = 1;
 	rand_col = 0;
 	rand_row = 0;
 	while (game->map.map[rand_row][rand_col] != '0')
 	{
-		rand_col = rand() % (up_bound_col - low_bound + 1) + low_bound;
-		rand_row = rand() % (up_bound_row - low_bound + 1) + low_bound;
+		rand_col = rand() % up_bound_col + 1;
+		rand_row = rand() % up_bound_row + 1;
 	}
 	print_img(*game, game->enemy, rand_col * TILE_SIZE, rand_row * TILE_SIZE);
 	game->map.enemy_pos.x = rand_col;

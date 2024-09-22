@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:46:55 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:20:25 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:12:14 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,25 @@ void	print_map(t_map map)
 		ft_printf("%s\n", map.enemy_map[i]);
 		i++;
 	}
+}
+
+int	space_available(t_map map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (++i < map.size.y)
+	{
+		j = -1;
+		while (++j < map.size.x)
+		{
+			if (map.map[i][j] == '0')
+				return (1);
+		}
+	}
+	return (0);
 }
 
 void	init_map(t_map *map)

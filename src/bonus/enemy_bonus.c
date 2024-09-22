@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:21:32 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:23:07 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:12:48 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	path_enemy(t_map *map)
 	if (map->enemy_map)
 		free_map(map->enemy_map, map->size.y);
 	map->enemy_map = aux;
-	print_map(map_aux);
 	free_map(map_aux.map, map_aux.size.y);
 }
 
@@ -48,9 +47,9 @@ int	on_path(t_game game, char *direction)
 		y -= 1;
 	else if (ft_strncmp(direction, "left", 4) == 0)
 		x -= 1;
-	else if (ft_strncmp(direction, "down", 2) == 0)
+	else if (ft_strncmp(direction, "down", 4) == 0)
 		y += 1;
-	else if (ft_strncmp(direction, "right", 2) == 0)
+	else if (ft_strncmp(direction, "right", 5) == 0)
 		x += 1;
 	if (map_aux[y][x] != 'F')
 		return (0);
@@ -72,20 +71,24 @@ void	persecute_player(t_game *game, char *direction)
 		game->map.enemy_pos.y -= 1;
 	else if (ft_strncmp(direction, "left", 4) == 0)
 		game->map.enemy_pos.x -= 1;
-	else if (ft_strncmp(direction, "down", 2) == 0)
+	else if (ft_strncmp(direction, "down", 4) == 0)
 		game->map.enemy_pos.y += 1;
-	else if (ft_strncmp(direction, "right", 2) == 0)
+	else if (ft_strncmp(direction, "right", 5) == 0)
 		game->map.enemy_pos.x += 1;
+	width = game->map.enemy_pos.x * TILE_SIZE;
+	height = game->map.enemy_pos.y * TILE_SIZE;
 	print_img(*game, game->enemy, width, height);
 }
 
-void	move_enemy(t_game *game, int *update_path)
+void	move_enemy(t_game *game, int *update_path, int space_available)
 {
 	int	right;
 	int	up;
 	int	left;
 	int	down;
 
+	if (space_available == 0)
+		return ;
 	if (*update_path == 1)
 		path_enemy(&game->map);
 	right = on_path(*game, "right");

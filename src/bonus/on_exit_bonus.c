@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:29:21 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:06:18 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:56:55 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	exit_game(t_game *game)
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);
 	free_map(game->map.map, game->map.size.y);
-	free_map(game->map.enemy_map, game->map.size.y);
+	if (game->map.enemy_map)
+		free_map(game->map.enemy_map, game->map.size.y);
 	free(game->mlx);
 	exit(EXIT_SUCCESS);
 	return (0);
