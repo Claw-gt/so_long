@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:46:55 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 19:53:10 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:20:25 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,25 @@ void	*free_map(char **map, int num)
 	}
 	free (map);
 	return (NULL);
+}
+
+char	**duplicate_map(t_map map)
+{
+	char	**map_aux;
+	int		rows;
+
+	rows = 0;
+	map_aux = (char **)malloc(sizeof(char *) * map.size.y);
+	if (!map_aux)
+		exit (EXIT_FAILURE);
+	while (rows < map.size.y)
+	{
+		map_aux[rows] = ft_strdup(map.enemy_map[rows]);
+		if (!map_aux[rows])
+			free_map(map_aux, rows);
+		rows++;
+	}
+	return (map_aux);
 }
 
 void	print_map(t_map map)
