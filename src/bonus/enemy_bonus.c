@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:21:32 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:00:39 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:18:28 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,23 @@ int	on_path(t_game game, char *direction)
 	return (1);
 }
 
+void	persecute_player(t_game *game, char *direction)
+{
+	if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
+		print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+	else
+		print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+	if (ft_strncmp(direction, "up", 2) == 0)
+		game->map.enemy_pos.y -= 1;
+	else if (ft_strncmp(direction, "left", 4) == 0)
+		game->map.enemy_pos.x -= 1;
+	else if (ft_strncmp(direction, "down", 2) == 0)
+		game->map.enemy_pos.y += 1;
+	else if (ft_strncmp(direction, "right", 2) == 0)
+		game->map.enemy_pos.x += 1;
+	print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
+}
+
 void	move_enemy(t_game *game, int *update_path)
 {
 	int	right;
@@ -90,41 +107,13 @@ void	move_enemy(t_game *game, int *update_path)
 	left = on_path(*game, "left");
 	down = on_path(*game, "down");
 	if (game->map.player_pos.x > game->map.enemy_pos.x && right == 1)
-	{
-		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		else
-			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		game->map.enemy_pos.x += 1;
-		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-	}
+		persecute_player(game, "right");
 	else if (game->map.player_pos.y > game->map.enemy_pos.y && down == 1)
-	{
-		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		else
-			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		game->map.enemy_pos.y += 1;
-		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-	}
+		persecute_player(game, "down");
 	else if (game->map.player_pos.x < game->map.enemy_pos.x && left == 1)
-	{
-		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		else
-			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		game->map.enemy_pos.x -= 1;
-		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-	}
+		persecute_player(game, "left");
 	else if (game->map.player_pos.y < game->map.enemy_pos.y && up == 1)
-	{
-		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		else
-			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		game->map.enemy_pos.y -= 1;
-		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-	}
+		persecute_player(game, "up");
 	if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'P')
 		enemy_attack(game);
 }
