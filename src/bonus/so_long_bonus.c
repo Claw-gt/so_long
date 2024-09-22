@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 20:46:12 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:02:36 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	main(int argc, char **argv)
 		return (1);
 	render_map(game);
 	render_enemy(&game);
+	path_enemy(&game.map);
 	mlx_key_hook(game.win, key_hook, &game);
 	mlx_hook(game.win, ON_DESTROY, 1L << 0, exit_game, &game);
 	mlx_loop(game.mlx);

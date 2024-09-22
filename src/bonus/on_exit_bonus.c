@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   on_exit_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:29:21 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 20:44:52 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:06:18 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,13 @@ void	enemy_on_exit(t_game game, int r, int c)
 
 void	enemy_attack(t_game *game)
 {
-	print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-	print_img(*game, game->ghost, game->map.player_pos.x * TILE_SIZE, game->map.player_pos.y * TILE_SIZE);
-	ft_printf("You LOSE!\n");
+	int	width;
+	int	height;
+
+	width = game->map.player_pos.x * TILE_SIZE;
+	height = game->map.player_pos.y * TILE_SIZE;
+	print_img(*game, game->floor, width, height);
+	print_img(*game, game->ghost, width, height);
+	ft_printf("You LOST!\n");
 	game->dead = 1;
 }

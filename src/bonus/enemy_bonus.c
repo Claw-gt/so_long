@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:21:32 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 20:45:49 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:00:39 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	on_enemy(t_vector player_pos, t_vector enemy_pos)
 {
 	if (player_pos.x == enemy_pos.x && player_pos.y == enemy_pos.y)
 		return (1);
-	ft_printf("Player pos: %d %d\n", player_pos.y, player_pos.x);
-	ft_printf("Enemy pos: %d %d\n", enemy_pos.y, enemy_pos.x);
 	return (0);
 }
 
@@ -52,7 +50,7 @@ void	path_enemy(t_map *map)
 	if (map->enemy_map)
 		free_map(map->enemy_map, map->size.y);
 	map->enemy_map = aux;
-	print_map(*map);
+	print_map(map_aux);
 	free_map(map_aux.map, map_aux.size.y);
 }
 
@@ -85,21 +83,16 @@ void	move_enemy(t_game *game, int *update_path)
 	int	left;
 	int	down;
 
-	//if (*update_path == 1)
-	printf("Update path %d\n", *update_path);	
-	path_enemy(&game->map);
+	if (*update_path == 1)
+		path_enemy(&game->map);
 	right = on_path(*game, "right");
 	up = on_path(*game, "up");
 	left = on_path(*game, "left");
 	down = on_path(*game, "down");
 	if (game->map.player_pos.x > game->map.enemy_pos.x && right == 1)
 	{
-		printf("Map; %c\n", game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x]);
 		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-		{
-			write(1, "Enemy on exit\n", 14);
 			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		}
 		else
 			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.x += 1;
@@ -107,12 +100,8 @@ void	move_enemy(t_game *game, int *update_path)
 	}
 	else if (game->map.player_pos.y > game->map.enemy_pos.y && down == 1)
 	{
-				printf("Map; %c\n", game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x]);
 		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-		{
-			write(1, "Enemy on exit\n", 14);
 			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		}
 		else
 			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.y += 1;
@@ -120,12 +109,8 @@ void	move_enemy(t_game *game, int *update_path)
 	}
 	else if (game->map.player_pos.x < game->map.enemy_pos.x && left == 1)
 	{
-				printf("Map; %c\n", game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x]);
 		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-		{
-			write(1, "Enemy on exit\n", 14);
 			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		}
 		else
 			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.x -= 1;
@@ -133,17 +118,13 @@ void	move_enemy(t_game *game, int *update_path)
 	}
 	else if (game->map.player_pos.y < game->map.enemy_pos.y && up == 1)
 	{
-				printf("Map; %c\n", game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x]);
 		if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'E')
-		{
-			write(1, "Enemy on exit\n", 14);
 			print_img(*game, game->exit, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
-		}
 		else
 			print_img(*game, game->floor, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 		game->map.enemy_pos.y -= 1;
 		print_img(*game, game->enemy, game->map.enemy_pos.x * TILE_SIZE, game->map.enemy_pos.y * TILE_SIZE);
 	}
 	if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'P')
-			enemy_attack(game);
+		enemy_attack(game);
 }

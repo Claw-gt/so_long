@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_map_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 20:48:15 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:05:05 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,14 @@ void	render_enemy(t_game *game)
 	low_bound = 1;
 	rand_col = 0;
 	rand_row = 0;
-	ft_printf("Low bound %d Up bound row %d Up bound col %d\n", low_bound, up_bound_row, up_bound_col);
 	while (game->map.map[rand_row][rand_col] != '0')
 	{
 		rand_col = rand() % (up_bound_col - low_bound + 1) + low_bound;
 		rand_row = rand() % (up_bound_row - low_bound + 1) + low_bound;
-		ft_printf("Rand col: %d Rand row: %d", rand_col, rand_row);
 	}
 	print_img(*game, game->enemy, rand_col * TILE_SIZE, rand_row * TILE_SIZE);
 	game->map.enemy_pos.x = rand_col;
 	game->map.enemy_pos.y = rand_row;
-	ft_printf("\nEnemy pos: %d %d\n", game->map.enemy_pos.y, game->map.enemy_pos.x);
-	//move_enemy(game);
-	//ft_printf("Range %d Rand col %d\n", up_bound_col - low_bound + 1, rand_col);
 }
 
 void	render_floor(t_game game)
