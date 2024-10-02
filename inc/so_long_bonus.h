@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:43:13 by clagarci          #+#    #+#             */
-/*   Updated: 2024/10/02 15:35:33 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:08:31 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
-# include <math.h>
 # define EXIT_MSG "STAY DETERMINED!"
 # define TILE_SIZE 50
 # define WHITE 0xffffff
