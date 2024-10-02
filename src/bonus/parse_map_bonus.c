@@ -6,7 +6,7 @@
 /*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 13:03:30 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:55:01 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*open_map(char *path)
 	while (str)
 	{
 		if (str[0] == '\n')
-			ft_error(ERROR_MAP_SIZE);
+			ft_error(ERROR_EMPTY_LINE);
 		aux = ft_strjoin(map_aux, str);
 		free (map_aux);
 		map_aux = aux;
