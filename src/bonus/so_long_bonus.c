@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/22 14:11:08 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:16:15 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	key_hook(int keycode, t_game *game)
 		custom_msg(*game, 0);
 		print_count(*game);
 		render_frame(*game, previous_pos);
-		move_enemy(game, &update_path, game->map.enemy_space);
+		if (keycode == W || keycode == A || keycode == S || keycode == D)
+			move_enemy(game, &update_path, game->map.enemy_space);
 	}
 	return (0);
 }
@@ -71,6 +72,7 @@ t_game	new_game(char *str, t_map map)
 	game.width = map.size.x * TILE_SIZE;
 	game.map = map;
 	game.counter = 0;
+	game.dead = 0;
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, game.width, game.height, str);
 	assign_textures(&game);
