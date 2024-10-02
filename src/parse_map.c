@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:36:07 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/19 19:35:27 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:35:03 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*open_map(char *path)
 	while (str)
 	{
 		if (str[0] == '\n')
-			ft_error(ERROR_MAP_SIZE);
+			ft_error(ERROR_EMPTY_LINE);
 		aux = ft_strjoin(map_aux, str);
 		free (map_aux);
 		map_aux = aux;
