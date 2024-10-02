@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:23 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 13:27:04 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:34:55 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_error(int error_code)
 		ft_printf("Invalid file extension\n");
 	else if (error_code == ERROR_FILE)
 		ft_printf("Invalid file\n");
+	else if (error_code == ERROR_EMPTY_LINE)
+		ft_printf("Map has empty lines\n");
 	else if (error_code == ERROR_MAP_SIZE)
 		ft_printf("Map is not rectangular\n");
 	else if (error_code == ERROR_MAP_WALLS)

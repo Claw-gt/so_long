@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:27 by clagarci          #+#    #+#             */
-/*   Updated: 2024/09/21 12:43:43 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:35:44 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ enum
 	ERROR_ARGS = 1,
 	ERROR_EXTENSION = 2,
 	ERROR_FILE = 3,
-	ERROR_MAP_SIZE = 4,
-	ERROR_MAP_WALLS = 5,
-	ERROR_MAP_CHARACTERS = 6,
-	ERROR_MAP_OBJECT = 7,
-	ERROR_MAP_PLAYER = 8,
-	ERROR_MAP_EXIT = 9,
-	ERROR_MAP_PATH = 10,
+	ERROR_EMPTY_LINE = 4,
+	ERROR_MAP_SIZE = 5,
+	ERROR_MAP_WALLS = 6,
+	ERROR_MAP_CHARACTERS = 7,
+	ERROR_MAP_OBJECT = 8,
+	ERROR_MAP_PLAYER = 9,
+	ERROR_MAP_EXIT = 10,
+	ERROR_MAP_PATH = 11,
 };
 
 typedef struct s_vector
