@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_map_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:54:04 by clagarci          #+#    #+#             */
-/*   Updated: 2024/10/02 16:19:34 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:12:57 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,8 @@ void	render_frame(t_game game, t_vector previous_pos)
 		print_img(game, game.exit, width, height);
 	width = game.map.player_pos.x * TILE_SIZE;
 	height = game.map.player_pos.y * TILE_SIZE;
-	if (game.map.map[game.map.player_pos.y][game.map.player_pos.x] == 'E' && \
-		on_enemy(game.map.player_pos, game.map.enemy_pos) == 0)
+	if (game.map.map[game.map.player_pos.y][game.map.player_pos.x] == 'E')
 		player_on_exit(game, game.map.player_pos.y, game.map.player_pos.x);
-	else if (on_enemy(game.map.player_pos, game.map.enemy_pos) == 1)
-		enemy_attack(&game);
 	else
 		print_img(game, game.player, width, height);
 }
@@ -58,18 +55,16 @@ void	render_enemy(t_game *game)
 	int	rand_col;
 	int	rand_row;
 	int	up_bound_col;
+	int	up_bound_row;
 
 	up_bound_col = game->map.size.x - 2;
-	rand_col = 1;
-	rand_row = 1;
+	up_bound_row = game->map.size.y - 2;
+	rand_col = 0;
+	rand_row = 0;
 	while (game->map.map[rand_row][rand_col] != '0')
 	{
-		rand_col++;
-		if (rand_col == up_bound_col)
-		{
-			rand_col = 1;
-			rand_row++;
-		}
+		rand_col = rand() % up_bound_col + 1;
+		rand_row = rand() % up_bound_row + 1;
 	}
 	print_img(*game, game->enemy, rand_col * TILE_SIZE, rand_row * TILE_SIZE);
 	game->map.enemy_pos.x = rand_col;

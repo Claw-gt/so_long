@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:21:32 by clagarci          #+#    #+#             */
-/*   Updated: 2024/10/02 16:24:54 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:12:48 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ void	move_enemy(t_game *game, int *update_path, int space_available)
 		persecute_player(game, "left");
 	else if (game->map.player_pos.y < game->map.enemy_pos.y && up == 1)
 		persecute_player(game, "up");
-	if (on_enemy(game->map.player_pos, game->map.enemy_pos) == 1)
+	if (game->map.map[game->map.enemy_pos.y][game->map.enemy_pos.x] == 'P')
 		enemy_attack(game);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_on_screen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clagarci <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:21:28 by clagarci          #+#    #+#             */
-/*   Updated: 2024/10/02 16:52:28 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:25:25 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	print_count(t_game game)
 {
 	char	*count_string;
 
-	custom_msg(game, 0);
 	count_string = ft_itoa(game.counter);
 	ft_printf("Moves: %s\n", count_string);
 	free(count_string);
