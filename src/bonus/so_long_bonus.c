@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:50:42 by clagarci          #+#    #+#             */
-/*   Updated: 2024/10/04 12:03:04 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:12:13 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_game	new_game(char *str, t_map map)
 	game.width = map.size.x * TILE_SIZE;
 	game.map = map;
 	game.counter = 0;
-	game.dead = 0;
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, game.width, game.height, str);
 	assign_textures(&game);

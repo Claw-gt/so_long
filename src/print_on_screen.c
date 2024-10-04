@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:21:28 by clagarci          #+#    #+#             */
-/*   Updated: 2024/10/02 16:52:28 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:11:24 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	custom_msg(t_game game, int player_on_exit)
 	int	first_row;
 
 	first_row = TILE_SIZE / 2;
-	center_col = game.map.size.x / 2 * TILE_SIZE;
+	center_col = (game.map.size.x / 2 - 1) * TILE_SIZE;
 	if (player_on_exit == 1)
 		print_msg(game, center_col, first_row, EXIT_MSG);
 	else
 	{
 		print_img(game, game.wall, game.map.size.x / 2 * TILE_SIZE, 0);
-		print_img(game, game.wall, (game.map.size.x / 2 + 1) * TILE_SIZE, 0);
+		print_img(game, game.wall, (game.map.size.x / 2 - 1) * TILE_SIZE, 0);
 	}
 }
 
