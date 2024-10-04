@@ -6,7 +6,7 @@
 /*   By: clagarci <clagarci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 12:43:13 by clagarci          #+#    #+#             */
-/*   Updated: 2024/10/02 16:08:31 by clagarci         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:04:56 by clagarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ typedef struct s_game
 	void		*ghost;
 	t_map		map;
 	int			counter;
-	int			dead;
 }				t_game;
 
 t_map	parse_map(char *path);
